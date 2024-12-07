@@ -1,5 +1,5 @@
 +++
-date = '2024-12-07T14:55:38+01:00'
+date = '2024-12-07T14:55:39+01:00'
 title = 'Herzenergie Yoga'
 showtoc = false
 menus = [ 'main' ]
