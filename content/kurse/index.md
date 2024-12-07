@@ -8,6 +8,8 @@ showtoc = false
 
 #### Ort: Physiotherapie Praxis Lina Eichler Kloster Oesede
 
+Anfahrt: <a href="https://maps.app.goo.gl/gcxnnvw6Kd1KFkv68">Königstraße 16, 49124 Georgsmarienhütte</a>
+
 Verbinde dich mit deinem Körper und deinem Herzen, finde deine innere Mitte und fühle alles was da ist.
 
 Nehme an, lasse los und öffne dich, lass deinen Atem frei fließen und gebe dich dem Moment hin.

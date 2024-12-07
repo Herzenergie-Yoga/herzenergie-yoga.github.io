@@ -9,6 +9,9 @@ pagination.pagerSize = 5
 [outputs]
 home = ["HTML"]
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [params]
 header_image = 'img/header.jpeg'
 about_me = true
@@ -27,6 +30,9 @@ title = "Kurse"
 href = "/agb"
 title = "AGB's & dein Yoga"
 
+[[params.addtional_menus]]
+href = "/kontakt"
+title = "Kontakt"
 
 [menu]
 [menus.main]
