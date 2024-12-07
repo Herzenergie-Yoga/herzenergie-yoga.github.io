@@ -1,0 +1,32 @@
+baseURL = 'https://example.org/'
+languageCode = 'de-de'
+title = 'Herzenergie Yoga'
+theme = 'cleanwhite'
+sectionPagesMenu = "main"
+preserveTaxonomyNames = true
+pagination.pagerSize = 5
+
+[outputs]
+home = ["HTML"]
+
+[params]
+header_image = 'img/header.jpeg'
+about_me = true
+algolia_search = false
+featured_tags = false
+
+[[params.addtional_menus]]
+href = "/about"
+title = "Über mich"
+
+[[params.addtional_menus]]
+href = "/kurse"
+title = "Kurse"
+
+[[params.addtional_menus]]
+href = "/agb"
+title = "AGB's & dein Yoga"
+
+
+[menu]
+[menus.main]
