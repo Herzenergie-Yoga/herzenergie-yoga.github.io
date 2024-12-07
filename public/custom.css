@@ -23,3 +23,11 @@ h5 {
     font-style: normal;
     font-size: 12pt;
 }
+
+.navbar-brand {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400 !important;
+    font-style: normal;
+    font-size: 14pt;
+}
