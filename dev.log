@@ -2,14 +2,28 @@
 > astro-temp@0.0.1 dev
 > astro dev
 
+▶ Astro collects anonymous usage data.
+  This information helps us improve Astro.
+  Run "astro telemetry disable" to opt-out.
+  https://astro.build/telemetry
+
 [vite] connected.
-13:16:31 [types] Generated 1ms
-13:16:31 [WARN] [content] Content config not loaded
-13:16:31 [vite] Re-optimizing dependencies because vite config has changed
- astro  v6.0.3 ready in 2013 ms
+14:27:25 [types] Generated 1ms
+14:27:25 [WARN] [content] Content config not loaded
+ astro  v6.0.3 ready in 3240 ms
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
-13:16:31 watching for file changes...
-13:18:35 [200] / 57ms
-13:18:35 [vite] ✨ new dependencies optimized: astro/runtime/client/dev-toolbar/entrypoint.js
-13:18:35 [vite] ✨ optimized dependencies changed. reloading
+14:27:25 watching for file changes...
+14:27:32 [200] / 116ms
+14:27:32 [vite] ✨ new dependencies optimized: astro/runtime/client/dev-toolbar/entrypoint.js
+14:27:32 [vite] ✨ optimized dependencies changed. reloading
+14:31:20 Configuration file updated. Restarting...
+[vite] program reload
+[vite] An error happened during full reload
+Failed to load url astro:server-app.js (resolved id: astro:server-app.js). Does the file exist?
+Error: Failed to load url astro:server-app.js (resolved id: astro:server-app.js). Does the file exist?
+    at loadAndTransform (file:///app/node_modules/vite/dist/node/chunks/config.js:22663:33)
+[vite] connected.
+14:31:22 [vite] Re-optimizing dependencies because lockfile has changed
+14:31:22 [types] Generated 122ms
+14:31:22 [vite] Re-optimizing dependencies because vite config has changed
