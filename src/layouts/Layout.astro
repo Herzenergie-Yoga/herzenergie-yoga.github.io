@@ -101,16 +101,15 @@ const currentPath = new URL(Astro.request.url).pathname;
     </div>
 
     <!-- Main Content -->
-		<main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <div class="prose prose-lg md:prose-xl prose-stone mx-auto text-center
-        prose-headings:font-light prose-headings:text-gray-800 prose-headings:tracking-wider
+		<main class="flex-grow max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <div class="prose prose-lg md:prose-xl prose-stone mx-auto
+        prose-headings:font-light prose-headings:text-gray-800 prose-headings:tracking-wider prose-headings:text-center
         prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:mb-12 prose-h1:uppercase
         prose-h2:text-2xl prose-h3:text-xl
         prose-a:text-gray-500 prose-a:no-underline hover:prose-a:text-gray-900 hover:prose-a:underline
         prose-p:leading-[1.8] prose-p:text-gray-600 prose-p:font-light
         prose-blockquote:border-l-gray-300 prose-blockquote:bg-gray-50 prose-blockquote:p-6 prose-blockquote:rounded-none prose-blockquote:italic prose-blockquote:text-gray-500 prose-blockquote:font-light
-        prose-img:rounded-none prose-img:shadow-sm prose-img:mx-auto
-        max-w-none">
+        prose-img:rounded-none prose-img:shadow-sm prose-img:mx-auto">
 			  <slot />
       </div>
 		</main>

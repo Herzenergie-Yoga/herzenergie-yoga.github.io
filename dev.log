@@ -3,13 +3,15 @@
 > astro dev
 
 [vite] connected.
-13:16:31 [types] Generated 1ms
-13:16:31 [WARN] [content] Content config not loaded
-13:16:31 [vite] Re-optimizing dependencies because vite config has changed
- astro  v6.0.3 ready in 2013 ms
-┃ Local    http://localhost:4321/
+15:20:25 [types] Generated 1ms
+15:20:25 [WARN] [content] Content config not loaded
+15:20:25 [vite] Re-optimizing dependencies because vite config has changed
+15:20:25 [vite] Port 4321 is in use, trying another one...
+ astro  v6.0.3 ready in 2429 ms
+┃ Local    http://localhost:4322/
 ┃ Network  use --host to expose
-13:16:31 watching for file changes...
-13:18:35 [200] / 57ms
-13:18:35 [vite] ✨ new dependencies optimized: astro/runtime/client/dev-toolbar/entrypoint.js
-13:18:35 [vite] ✨ optimized dependencies changed. reloading
+15:20:25 watching for file changes...
+15:20:41 [200] /about 98ms
+15:20:42 [vite] ✨ new dependencies optimized: astro/runtime/client/dev-toolbar/entrypoint.js
+15:20:42 [vite] ✨ optimized dependencies changed. reloading
+15:20:44 [200] /about 4ms
