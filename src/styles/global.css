@@ -3,6 +3,8 @@
 
 @theme {
   --font-lato: 'Lato', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-pinyon: 'Pinyon Script', cursive;
   --color-brand-bg: #f5f2ef;
   --color-brand-primary: #a68d71;
   --color-brand-secondary: #b28e65;
