@@ -19,7 +19,7 @@ const currentPath = new URL(Astro.request.url).pathname;
 ---
 
 <!doctype html>
-<html lang="de" class="font-lato bg-brand-bg text-brand-text scroll-smooth">
+<html lang="de" class="font-nunito bg-brand-bg text-brand-text scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Herzenergie Yoga - YOGA IN GEORGSMARIENHÜTTE" />
@@ -29,7 +29,7 @@ const currentPath = new URL(Astro.request.url).pathname;
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Antic+Didone&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
 		<title>{title} | Herzenergie Yoga</title>
 	</head>
@@ -39,7 +39,7 @@ const currentPath = new URL(Astro.request.url).pathname;
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
           <div class="flex-shrink-0 flex items-center">
-            <a href="/" class="text-3xl md:text-4xl font-light tracking-[0.15em] text-brand-primary hover:text-brand-secondary transition-colors uppercase">
+            <a href="/" class="text-3xl md:text-4xl font-antic-didone font-light tracking-[0.15em] text-brand-primary hover:text-brand-secondary transition-colors uppercase">
               Herzenergie Yoga
             </a>
           </div>
@@ -49,7 +49,7 @@ const currentPath = new URL(Astro.request.url).pathname;
             {navItems.map(item => (
               <a
                 href={item.href}
-                class={`text-sm tracking-[0.1em] font-light transition-colors uppercase
+                class={`text-sm tracking-[0.1em] font-antic-didone font-light transition-colors uppercase
                   ${(currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)))
                     ? 'text-brand-primary border-b border-brand-primary pb-1'
                     : 'text-brand-text hover:text-brand-primary'
@@ -78,7 +78,7 @@ const currentPath = new URL(Astro.request.url).pathname;
           {navItems.map(item => (
             <a
               href={item.href}
-              class={`block px-3 py-2 text-sm uppercase tracking-widest font-light
+              class={`block px-3 py-2 text-sm uppercase tracking-widest font-antic-didone font-light
                 ${(currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)))
                   ? 'text-brand-primary'
                   : 'text-brand-text hover:text-brand-primary'
@@ -103,9 +103,9 @@ const currentPath = new URL(Astro.request.url).pathname;
     <!-- Main Content -->
 		<main class="flex-grow max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24">
       <div class="prose prose-lg md:prose-xl prose-stone mx-auto
-        prose-headings:font-bold prose-headings:text-brand-primary prose-headings:tracking-wider prose-headings:text-center
-        prose-h1:text-4xl md:prose-h1:text-5xl prose-h1:mb-12 prose-h1:uppercase
-        prose-h2:text-3xl prose-h3:text-2xl
+        prose-headings:font-alex-brush prose-headings:font-normal prose-headings:text-brand-primary prose-headings:text-center
+        prose-h1:text-6xl md:prose-h1:text-7xl prose-h1:mb-12
+        prose-h2:text-5xl prose-h3:text-4xl
         prose-a:text-brand-secondary prose-a:no-underline hover:prose-a:text-brand-primary hover:prose-a:underline
         prose-p:leading-[1.8] prose-p:text-brand-text prose-p:font-light
         prose-blockquote:border-l-brand-secondary prose-blockquote:bg-brand-bg prose-blockquote:p-6 prose-blockquote:rounded-none prose-blockquote:italic prose-blockquote:text-brand-text prose-blockquote:font-light
@@ -117,7 +117,7 @@ const currentPath = new URL(Astro.request.url).pathname;
     <!-- Footer -->
     <footer class="bg-brand-bg border-t border-brand-secondary/20 mt-auto py-16">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
-        <h3 class="text-lg font-light tracking-[0.2em] text-brand-primary uppercase mb-2">Herzenergie Yoga</h3>
+        <h3 class="text-lg font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase mb-2">Herzenergie Yoga</h3>
         <p class="text-brand-text font-light tracking-wider text-sm">YOGA IN GEORGSMARIENHÜTTE</p>
         <p class="text-brand-text font-light tracking-wider text-sm">
           <a href="https://herzenergie-yoga.de" class="hover:text-brand-primary transition-colors">herzenergie-yoga.de</a>

@@ -2,7 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-lato: 'Lato', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-alex-brush: 'Alex Brush', cursive;
+  --font-antic-didone: 'Antic Didone', serif;
   --color-brand-bg: #f5f2ef;
   --color-brand-primary: #a68d71;
   --color-brand-secondary: #b28e65;
