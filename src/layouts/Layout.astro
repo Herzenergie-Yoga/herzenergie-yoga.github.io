@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -32,6 +33,10 @@ const currentPath = new URL(Astro.request.url).pathname;
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Antic+Didone&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
 		<title>{title} | Herzenergie Yoga</title>
+		<ClientRouter />
+    <script is:inline>
+      document.documentElement.classList.add('js-enabled');
+    </script>
 	</head>
 	<body class="min-h-screen flex flex-col font-light">
     <!-- Header/Nav -->
@@ -96,7 +101,7 @@ const currentPath = new URL(Astro.request.url).pathname;
       <img
         src="/img/header.jpeg"
         alt="Herzenergie Yoga"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover animate-slow-zoom-out"
       />
     </div>
 
@@ -131,15 +136,37 @@ const currentPath = new URL(Astro.request.url).pathname;
     </footer>
 
     <script>
-      // Mobile menu toggle
-      const btn = document.getElementById('mobile-menu-btn');
-      const menu = document.getElementById('mobile-menu');
+      document.addEventListener('astro:page-load', () => {
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
 
-      if (btn && menu) {
-        btn.addEventListener('click', () => {
-          menu.classList.toggle('hidden');
+        if (btn && menu) {
+          // Remove old listener to avoid duplicates on navigation
+          const newBtn = btn.cloneNode(true);
+          btn.parentNode.replaceChild(newBtn, btn);
+          newBtn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+          });
+        }
+
+        // Scroll animations for prose content
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px"
         });
-      }
+
+        document.querySelectorAll('.prose > *').forEach((el) => {
+          observer.observe(el);
+        });
+      });
     </script>
 	</body>
 </html>
