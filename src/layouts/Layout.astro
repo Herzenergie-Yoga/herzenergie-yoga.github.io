@@ -41,11 +41,11 @@ const currentPath = new URL(Astro.request.url).pathname;
 	<body class="min-h-screen flex flex-col font-light">
     <!-- Header/Nav -->
     <header class="bg-brand-bg sticky top-0 z-50 shadow-sm">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
           <div class="flex-shrink-0 flex items-center">
-            <a href="/" class="text-3xl md:text-4xl font-antic-didone font-light tracking-[0.15em] text-brand-primary hover:text-brand-secondary transition-colors uppercase">
-              Herzenergie Yoga
+            <a href="/" class="hover:opacity-80 transition-opacity">
+              <img src="/img/logo-ninjaseidel.png" alt="Herzenergie Yoga" class="h-16 md:h-20 w-auto" />
             </a>
           </div>
 
@@ -101,7 +101,8 @@ const currentPath = new URL(Astro.request.url).pathname;
       <img
         src="/img/header.jpeg"
         alt="Herzenergie Yoga"
-        class="w-full h-full object-cover animate-slow-zoom-out"
+        id="header-img"
+        class="w-full h-full object-cover"
       />
     </div>
 
@@ -110,11 +111,12 @@ const currentPath = new URL(Astro.request.url).pathname;
       <div class="prose prose-lg md:prose-xl prose-stone mx-auto
         prose-headings:font-alex-brush prose-headings:font-normal prose-headings:text-brand-primary prose-headings:text-center
         prose-h1:text-6xl md:prose-h1:text-7xl prose-h1:mb-12
-        prose-h2:text-5xl prose-h3:text-4xl
+        prose-h2:text-5xl prose-h3:text-4xl prose-h4:text-3xl
         prose-a:text-brand-secondary prose-a:no-underline hover:prose-a:text-brand-primary hover:prose-a:underline
         prose-p:leading-[1.8] prose-p:text-brand-text prose-p:font-light
-        prose-blockquote:border-l-brand-secondary prose-blockquote:bg-brand-bg prose-blockquote:p-6 prose-blockquote:rounded-none prose-blockquote:italic prose-blockquote:text-brand-text prose-blockquote:font-light
-        prose-img:rounded-none prose-img:shadow-sm prose-img:mx-auto">
+        prose-blockquote:border-l-brand-secondary prose-blockquote:bg-brand-bg prose-blockquote:p-6 prose-blockquote:rounded-none prose-blockquote:italic prose-blockquote:text-brand-primary prose-blockquote:font-light
+        prose-img:rounded-none prose-img:shadow-sm prose-img:mx-auto
+        prose-strong:text-brand-primary prose-strong:font-semibold">
 			  <slot />
       </div>
 		</main>
@@ -125,9 +127,13 @@ const currentPath = new URL(Astro.request.url).pathname;
         <h3 class="text-lg font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase mb-2">Herzenergie Yoga</h3>
         <p class="text-brand-text font-light tracking-wider text-sm">YOGA IN GEORGSMARIENHÜTTE</p>
         <p class="text-brand-text font-light tracking-wider text-sm">
-          <a href="https://herzenergie-yoga.de" class="hover:text-brand-primary transition-colors">herzenergie-yoga.de</a>
+          <a href="https://ninjaseidel.de" class="hover:text-brand-primary transition-colors">ninjaseidel.de</a>
         </p>
-        <p class="text-brand-text font-light tracking-wider text-sm mb-6">0163-2876265</p>
+        <p class="text-brand-text font-light tracking-wider text-sm">0163-2876265</p>
+        <a href="https://www.instagram.com/herzenergieyoga/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-brand-text hover:text-brand-primary transition-colors text-sm mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          herzenergieyoga
+        </a>
 
         <p class="text-sm text-brand-text/80">
           Copyright &copy; Herzenergie Yoga {new Date().getFullYear()}
@@ -137,6 +143,17 @@ const currentPath = new URL(Astro.request.url).pathname;
 
     <script>
       document.addEventListener('astro:page-load', () => {
+        // Header image zoom animation only on initial page load
+        const img = document.getElementById('header-img');
+        if (img) {
+          if (!sessionStorage.getItem('hero-animated')) {
+            img.classList.add('animate-slow-zoom-out');
+            sessionStorage.setItem('hero-animated', '1');
+          } else {
+            img.classList.remove('animate-slow-zoom-out');
+          }
+        }
+
         // Mobile menu toggle
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
