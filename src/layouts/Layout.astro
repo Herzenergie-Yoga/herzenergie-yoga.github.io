@@ -42,7 +42,7 @@ const currentPath = new URL(Astro.request.url).pathname;
     <!-- Header/Nav -->
     <header class="bg-brand-bg sticky top-0 z-50 shadow-sm">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex md:flex-row justify-between items-center gap-6">
           <div class="flex-shrink-0 flex items-center">
             <a href="/" class="hover:opacity-80 transition-opacity">
               <img src="/img/logo-ninjaseidel.png" alt="Herzenergie Yoga" class="h-16 md:h-20 w-auto" />
@@ -66,14 +66,11 @@ const currentPath = new URL(Astro.request.url).pathname;
           </nav>
 
           <!-- Mobile menu button -->
-          <div class="md:hidden flex items-center w-full justify-center border-t border-brand-secondary/20 pt-4 mt-2">
-            <button id="mobile-menu-btn" class="text-brand-text hover:text-brand-primary focus:outline-none p-2 flex items-center gap-2 uppercase tracking-widest text-sm">
-              <span>Menü</span>
-              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
-              </svg>
-            </button>
-          </div>
+          <button id="mobile-menu-btn" class="md:hidden text-brand-text hover:text-brand-primary focus:outline-none p-2">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
         </div>
       </div>
 
