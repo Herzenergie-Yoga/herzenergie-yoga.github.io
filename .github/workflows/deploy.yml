@@ -40,6 +40,8 @@ jobs:
         run: npm ci
       - name: Build with Astro
         run: npm run build
+      - name: Create CNAME file
+        run: echo "ninjaseidel.de" > ./dist/CNAME
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
