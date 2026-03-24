@@ -5,42 +5,60 @@ title: Über mich
 
 # Über mich
 
-Schön, dass du hier bist und mehr über mich und meinen Lebensweg erfahren möchtest.
+Wann hast du das letzte Mal wirklich auf dein Herz gehört?
 
-#### Wann hast du das letzte Mal auf dein Herz gehört?
+Nicht so, wie es auf Postkarten steht – sondern so, dass du spürst, wie deine Seele dich leise an deine eigene Wahrheit erinnert.
 
-Und zwar nicht wie Postkarten dich fragen, sondern wenn deine Seele dich an deine Bestimmung erinnert?
+**Meine Seele hat nie aufgehört, mit mir zu sprechen.**
 
-Meine Seele hat nie locker gelassen.
+Nach außen sah mein Leben lange geordnet und geplant aus. Doch tief in mir war da eine leise Unruhe. Denn je mehr ich versuchte, die Erwartungen der Welt zu erfüllen, desto leiser wurde mein inneres Licht.
 
-Zu einem geregelten Lebenslauf gesellte sich eine innere Unruhe.
-Denn je länger ich die Erwartungen der Welt bediente, umso schwächer brannte mein inneres Licht.
+Mein Körper begann mir immer deutlicher zu zeigen, dass etwas nicht im Einklang war. Aus einem leisen Schwächerwerden wurde irgendwann nur noch eine kleine Flamme, die ich versuchte zu schützen. Und aus einfachen Sorgen entstand ein Gefühl von tiefer Unsicherheit und innerer Enge.
 
-Mit jedem neuen Tag wurde mein Körper zur Anzeigetafel, was alles nicht stimmte.
-Aus “schwächer” wurde die nötigste Sparflamme und aus einfachen Sorgen wurde handfeste Lebensangst.
+<strong style="color: var(--color-brand-primary);">Also stellte sich die Frage: Wie finde ich wieder zurück?</strong>
 
-#### Wie also rauskommen aus dieser Spirale?
+Die Antwort war – und ist – erstaunlich schlicht:
 
-Die Antwort war & ist einfach: indem ich meiner Seele zuhöre, was sie mir zu sagen hat.
+Indem ich meiner Seele wieder zuhöre.
 
-Und das geht nur, wenn mein Körper die richtige Schwingung dafür hat.
+Doch um sie hören zu können, braucht auch mein Körper Raum, Ruhe und die richtige Schwingung.
 
-Yoga war und ist auf diesem Weg das Mittel, das mich die Sprache meiner Seele verstehen ließ und lässt.
+**Yoga wurde auf diesem Weg mein Anker.**
 
-Diese sprichwörtliche Reise führte mich durch Australien & Indien, durch Nepal & Neuseeland.
+Es hat mir geholfen, die Sprache meiner Seele wieder zu verstehen – und ihr Schritt für Schritt zu folgen.
 
-Mit jedem Kilometer den ich zurücklegte kam ich mir selbst näher.
+Diese Reise hat mich durch Australien und Indien geführt, durch Nepal und Neuseeland.
 
-Und vor allem merkte ich, dass ich das wichtigste immer dabei hatte:
+Mit jedem Kilometer, den ich zurücklegte, kam ich mir selbst ein Stück näher.
 
-#### Meine ureigene innere Kraft und das Vertrauen göttlich geführt zu sein.
+Und irgendwann wurde mir klar:
 
-Du musst nicht die Welt bereisen, um diese Reise zu deinem Innersten zu schaffen.
+**Das Wichtigste hatte ich die ganze Zeit bei mir.**
 
-Unsere Erde ist wunderschön & ich möchte keinen Sonnenaufgang am Meer missen, doch noch viel schöner ist die Melodie unserer Seele.
+**Meine eigene innere Kraft.**
 
-Wenn du sie zu hören beginnst und anfängst sie mehr und mehr zu fühlen,zu verstehen und MIT ihr zusammen zu leben, ja sie in dein Leben zu integrieren, dann findest du das Glück an jedem Ort der Welt, denn **es ist ALLES IN DIR**.
+**Und das tiefe Vertrauen, dass ich geführt werde.**
+
+Du musst nicht um die ganze Welt reisen, um diese Verbindung zu dir selbst zu finden.
+
+Unsere Erde ist wunderschön – und ich liebe jeden Sonnenaufgang am Meer.
+
+Doch noch berührender ist die Melodie deiner eigenen Seele.
+
+Wenn du beginnst, sie zu hören…
+
+sie zu fühlen…
+
+sie zu verstehen…
+
+und Schritt für Schritt mit ihr zu leben,
+
+dann kannst du an jedem Ort der Welt Glück finden.
+
+**Denn alles, was du suchst, ist bereits in dir.**
 
 **Auf dieser Reise begleite ich dich.**
 
-**Namasté, deine Ninja**
+**Namasté**
+
+**deine Ninja**
