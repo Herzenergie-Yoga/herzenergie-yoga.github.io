@@ -14,13 +14,14 @@ npm run preview   # Preview production build locally
 
 This is an [Astro](https://astro.build) static site deployed to GitHub Pages at `herzenergie-yoga.github.io`.
 
-**Pages** live in `src/pages/` as `.md` files with frontmatter. Each file maps directly to a route:
+**Pages** live in `src/pages/` as `.md` files (or `.astro` for dynamic pages) with frontmatter. Each file maps directly to a route:
 - `index.md` → `/`
 - `about.md` → `/about`
-- `kurse/index.md` → `/kurse`
-- `kurse/kloster.md` → `/kurse/kloster`
+- `kurse/index.astro` → `/kurse` (dynamic Astro component)
+- `agb.md` → `/agb`
+- `kontakt.md` → `/kontakt`
 
-All pages use `layout: ../layouts/Layout.astro` (or `../../layouts/Layout.astro` for nested pages) and must set a `title` in frontmatter.
+All `.md` pages use `layout: ../layouts/Layout.astro` and must set a `title` in frontmatter.
 
 **Single layout** (`src/layouts/Layout.astro`) handles everything: navigation, header image, main content via `<slot />`, and footer. Nav links are hardcoded in the `navItems` array in that file.
 
