@@ -50,8 +50,11 @@ Ganz ohne Erwartungen.
 Dafür mit ganz viel Herz, Achtsamkeit und Sanftheit.
 
 ✨ Einen Raum, in dem du dich wieder spüren darfst.
+
 ✨ Einen Raum, in dem deine Seele gehört wird.
+
 ✨ Einen Raum, in dem du dich getragen fühlen kannst.
+
 ✨ Einen Raum, in dem auch dein Vertrauen wachsen darf, dass du geführt bist.
 
 Wenn du spürst, dass dich diese Worte berühren…
