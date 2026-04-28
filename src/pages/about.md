@@ -65,8 +65,7 @@ dann ist das vielleicht schon der erste Schritt zurück zu dir.
 Ich begleite dich dabei.
 Behutsam. Liebevoll. In deinem Tempo.
 
-Du darfst dich jederzeit bei mir melden.
-Ich bin da.
+Folge deinem Gefühl – und melde dich gerne unverbindlich bei mir.
 
 Namasté,
 deine Ninja
