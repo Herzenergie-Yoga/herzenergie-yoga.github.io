@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const kurse = (await getCollection('kurse'))
+  .filter((k) => k.data.kursart === 'Yin Yoga')
+  .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
+---
+
+<Layout title="Yin Yoga">
+  <p class="not-prose text-center">
+    <a href="/kurse" class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
+  </p>
+
+  <h1>Yin Yoga</h1>
+
+  <p>Yin Yoga ist eine Einladung in die Stille. Eine Praxis, die ganz weich und langsam ist – ein Raum zum Ankommen, zum Lauschen, zum Loslassen.</p>
+
+  <p>Wir halten die Haltungen über mehrere Minuten am Boden, ohne Anspannung, ganz im Hingeben. Dabei erreichen wir die tieferen Schichten unseres Körpers – das Bindegewebe, die Faszien, die Gelenke – und gleichzeitig auch das, was sich oft tief in uns versteckt: angestaute Gefühle, leise Gedanken, alte Spannungen.</p>
+
+  <p>Yin Yoga schenkt deinem Körper Weite und deinem Geist Ruhe. Du darfst spüren, atmen, einfach sein – und dabei wieder zu dir selbst nach Hause finden.</p>
+
+  <p>Diese Praxis ist eine wundervolle Ergänzung zum oft so aktiven Alltag und für Menschen mit und ohne Yogaerfahrung geeignet.</p>
+
+  <h2>Termine</h2>
+
+  <div class="not-prose my-10 grid grid-cols-1 sm:grid-cols-2 gap-px bg-brand-secondary/20">
+    {kurse.map((kurs) => (
+      <div class="bg-brand-bg px-6 py-8 text-center space-y-5">
+        <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{kurs.data.wochentag}</p>
+        <h3 class="text-5xl font-alex-brush text-brand-primary font-normal min-h-24 flex items-center justify-center">{kurs.data.kursart}</h3>
+        <p class="text-brand-text font-light tracking-widest text-sm">{kurs.data.uhrzeit}</p>
+        <div class="flex flex-col items-center gap-1 text-xs text-brand-text/70 tracking-wider">
+          <span>Kursstart: {kurs.data.kursstart}</span>
+          <span>Kursende: {kurs.data.kursende}</span>
+        </div>
+        <div class="pt-5 mt-5 border-t border-brand-secondary/20">
+          <p class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase">{kurs.data.termine} Termine · {kurs.data.preis} Euro</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <p class="not-prose text-brand-primary font-bold text-lg">Ort: Physiopraxis Lina Eichler, Kloster Oesede</p>
+  <p class="not-prose text-brand-primary font-bold text-lg">Anfahrt: <a href="https://maps.app.goo.gl/gcxnnvw6Kd1KFkv68" class="inline-flex items-center gap-1 underline underline-offset-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 shrink-0"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.327a8 8 0 10-16 0c0 3.63 1.556 6.326 3.5 8.327a19.583 19.583 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>Königstraße 16, 49124 Georgsmarienhütte</a></p>
+
+  <p><strong>Du kannst nicht alle 8 Termine wahrnehmen?</strong><br />
+  Dann komm gerne für einzelne Termine vorbei.<br />
+  „Drop in" oder Probestunde mit vorheriger Anmeldung möglich.<br />
+  Ausgleich 20€</p>
+
+  <p>Einstieg jederzeit möglich, auch in bereits laufende Kurse.</p>
+  <p>Falls du einen Termin nicht wahrnehmen kannst, schicke gerne eine Freundin/einen Freund stattdessen.</p>
+  <p>Nicht wahrgenommene Termine werden nicht erstattet.</p>
+</Layout>

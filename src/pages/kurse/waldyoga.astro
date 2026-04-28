@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const termine = [
+  '04. Juli 2026',
+  '11. Juli 2026',
+  '18. Juli 2026',
+  '25. Juli 2026',
+  '01. August 2026',
+  '08. August 2026',
+];
+---
+
+<Layout title="Waldyoga">
+  <p class="not-prose text-center">
+    <a href="/kurse" class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
+  </p>
+
+  <h1>Waldyoga</h1>
+
+  <p class="not-prose text-center text-brand-primary font-antic-didone tracking-[0.2em] uppercase text-sm mb-10">In den Sommerferien · Sanftes Hatha Yoga &amp; Waldbaden</p>
+
+  <p>Gönn dir eine Auszeit in der Natur – entspanne Körper, Geist und Seele im Wald.</p>
+
+  <p>Zwischen alten Bäumen, weichem Moos und dem leisen Rauschen der Blätter darfst du dich öffnen für etwas, das nur die Natur dir schenken kann: ein tiefes Atmen, ein weites Herz, ein stiller Moment ganz bei dir.</p>
+
+  <p>In dieser Sommerferien-Reihe verbinden wir sanftes Hatha Yoga mit der heilsamen Praxis des Waldbadens. Wir bewegen uns achtsam, lauschen, spüren – und lassen uns vom Wald tragen, halten und nähren.</p>
+
+  <p>Eine wunderschöne Einladung, deine innere Mitte wiederzufinden – mitten in der Natur.</p>
+
+  <h2>Termine</h2>
+
+  <div class="not-prose my-10 bg-brand-bg border border-brand-secondary/20 px-6 py-8 sm:px-10 sm:py-10 space-y-6 text-center">
+    <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">Jeden Samstag</p>
+    <p class="text-brand-text font-light tracking-widest text-sm">10:45 – 12:00 Uhr</p>
+    <ul class="flex flex-col items-center gap-2 text-sm text-brand-text/80 tracking-wider list-none p-0">
+      {termine.map((datum) => (
+        <li>{datum}</li>
+      ))}
+    </ul>
+    <div class="pt-6 mt-6 border-t border-brand-secondary/20 space-y-2">
+      <p class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase">Ausgleich</p>
+      <p class="text-brand-text font-light text-sm">Einzeltermin 20 €</p>
+      <p class="text-brand-text font-light text-sm">Alle 6 Termine: 15 € pro Einheit</p>
+    </div>
+  </div>
+
+  <h2>Treffpunkt</h2>
+
+  <p class="not-prose text-brand-primary font-bold text-lg">Wanderparkplatz „Woods"</p>
+  <p>(ehemals Schützenhaus am Rehlberg)<br />
+  Parken vor Ort möglich.</p>
+
+  <h2>Anmeldung</h2>
+
+  <p>Melde dich gerne telefonisch oder per WhatsApp bei mir an:<br />
+  <strong><a href="tel:+491632876265">0163 2876265</a></strong></p>
+
+  <blockquote>
+    Atme. Spüre. Verbinde dich mit der Natur.
+  </blockquote>
+</Layout>
