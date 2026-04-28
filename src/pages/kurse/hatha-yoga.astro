@@ -24,9 +24,9 @@ const kurse = (await getCollection('kurse'))
 
   <h2>Termine</h2>
 
-  <div class="not-prose my-10 grid grid-cols-1 sm:grid-cols-2 gap-px bg-brand-secondary/20">
+  <div class:list={["not-prose my-10 grid grid-cols-1 gap-px bg-brand-secondary/20", { "sm:grid-cols-2": kurse.length > 1 }]}>
     {kurse.map((kurs) => (
-      <div class="bg-brand-bg px-6 py-8 text-center space-y-5">
+      <div class="bg-brand-bg px-6 py-8 sm:px-10 sm:py-10 text-center space-y-5">
         <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{kurs.data.wochentag}</p>
         <h3 class="text-5xl font-alex-brush text-brand-primary font-normal min-h-24 flex items-center justify-center">{kurs.data.kursart}</h3>
         <p class="text-brand-text font-light tracking-widest text-sm">{kurs.data.uhrzeit}</p>
