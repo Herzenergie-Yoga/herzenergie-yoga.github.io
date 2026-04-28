@@ -1,19 +1,19 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import '../styles/global.css';
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
 
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
 
 const navItems = [
-  { href: '/', title: 'Home' },
-  { href: '/about', title: 'Über mich' },
-  { href: '/kurse', title: 'Kurse' },
-  { href: '/agb', title: "AGB's & dein Yoga" },
-  { href: '/kontakt', title: 'Kontakt' }
+    { href: "/", title: "Home" },
+    { href: "/about", title: "Über mich" },
+    { href: "/kurse", title: "Yoga-Kurse" },
+    { href: "/agb", title: "AGB's & dein Yoga" },
+    { href: "/kontakt", title: "Kontakt" },
 ];
 
 const currentPath = new URL(Astro.request.url).pathname;
@@ -21,91 +21,131 @@ const currentPath = new URL(Astro.request.url).pathname;
 
 <!doctype html>
 <html lang="de" class="font-nunito bg-brand-bg text-brand-text scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Herzenergie Yoga - YOGA IN GEORGSMARIENHÜTTE" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="description"
+            content="Herzenergie Yoga - YOGA IN GEORGSMARIENHÜTTE"
+        />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+        <meta name="generator" content={Astro.generator} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Antic+Didone&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Antic+Didone&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+            rel="stylesheet"
+        />
 
-		<title>{title} | Herzenergie Yoga</title>
-		<ClientRouter />
-    <script is:inline>
-      document.documentElement.classList.add('js-enabled');
-    </script>
-	</head>
-	<body class="min-h-screen flex flex-col font-light">
-    <!-- Header/Nav -->
-    <header class="bg-brand-bg sticky top-0 z-50 shadow-sm">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-        <div class="flex md:flex-row justify-between items-center gap-6">
-          <div class="flex-shrink-0 flex items-center">
-            <a href="/" class="hover:opacity-80 transition-opacity">
-              <img src="/img/logo-ninjaseidel.png" alt="Herzenergie Yoga" class="h-16 md:h-20 w-auto" />
-            </a>
-          </div>
+        <title>{title} | Herzenergie Yoga</title>
+        <ClientRouter />
+        <script is:inline>
+            document.documentElement.classList.add("js-enabled");
+        </script>
+    </head>
+    <body class="min-h-screen flex flex-col font-light">
+        <!-- Header/Nav -->
+        <header class="bg-brand-bg sticky top-0 z-50 shadow-sm">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+                <div
+                    class="flex md:flex-row justify-between items-center gap-6"
+                >
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="hover:opacity-80 transition-opacity">
+                            <img
+                                src="/img/logo-ninjaseidel.png"
+                                alt="Herzenergie Yoga"
+                                class="h-16 md:h-20 w-auto"
+                            />
+                        </a>
+                    </div>
 
-          <!-- Desktop Navigation -->
-          <nav class="hidden md:flex space-x-12">
-            {navItems.map(item => (
-              <a
-                href={item.href}
-                class={`text-sm tracking-[0.1em] font-antic-didone font-light transition-colors uppercase
-                  ${(currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)))
-                    ? 'text-brand-primary border-b border-brand-primary pb-1'
-                    : 'text-brand-text hover:text-brand-primary'
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden md:flex space-x-12">
+                        {
+                            navItems.map((item) => (
+                                <a
+                                    href={item.href}
+                                    class={`text-sm tracking-[0.1em] font-antic-didone font-light transition-colors uppercase
+                  ${
+                      currentPath === item.href ||
+                      (item.href !== "/" && currentPath.startsWith(item.href))
+                          ? "text-brand-primary border-b border-brand-primary pb-1"
+                          : "text-brand-text hover:text-brand-primary"
                   }`}
-              >
-                {item.title}
-              </a>
-            ))}
-          </nav>
+                                >
+                                    {item.title}
+                                </a>
+                            ))
+                        }
+                    </nav>
 
-          <!-- Mobile menu button -->
-          <button id="mobile-menu-btn" class="md:hidden text-brand-text hover:text-brand-primary focus:outline-none p-2">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+                    <!-- Mobile menu button -->
+                    <button
+                        id="mobile-menu-btn"
+                        class="md:hidden text-brand-text hover:text-brand-primary focus:outline-none p-2"
+                    >
+                        <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-      <!-- Mobile Navigation -->
-      <div id="mobile-menu" class="hidden md:hidden bg-brand-bg border-b border-brand-secondary/20">
-        <div class="px-4 pt-2 pb-6 space-y-4 text-center">
-          {navItems.map(item => (
-            <a
-              href={item.href}
-              class={`block px-3 py-2 text-sm uppercase tracking-widest font-antic-didone font-light
-                ${(currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)))
-                  ? 'text-brand-primary'
-                  : 'text-brand-text hover:text-brand-primary'
-                }`}
+            <!-- Mobile Navigation -->
+            <div
+                id="mobile-menu"
+                class="hidden md:hidden bg-brand-bg border-b border-brand-secondary/20"
             >
-              {item.title}
-            </a>
-          ))}
+                <div class="px-4 pt-2 pb-6 space-y-4 text-center">
+                    {
+                        navItems.map((item) => (
+                            <a
+                                href={item.href}
+                                class={`block px-3 py-2 text-sm uppercase tracking-widest font-antic-didone font-light
+                ${
+                    currentPath === item.href ||
+                    (item.href !== "/" && currentPath.startsWith(item.href))
+                        ? "text-brand-primary"
+                        : "text-brand-text hover:text-brand-primary"
+                }`}
+                            >
+                                {item.title}
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+        </header>
+
+        <!-- Header Image -->
+        <div
+            class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden bg-brand-bg"
+        >
+            <img
+                src="/img/header.jpeg"
+                alt="Herzenergie Yoga"
+                id="header-img"
+                class="w-full h-full object-cover"
+            />
         </div>
-      </div>
-    </header>
 
-    <!-- Header Image -->
-    <div class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden bg-brand-bg">
-      <img
-        src="/img/header.jpeg"
-        alt="Herzenergie Yoga"
-        id="header-img"
-        class="w-full h-full object-cover"
-      />
-    </div>
-
-    <!-- Main Content -->
-		<main class="flex-grow max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <div class="prose prose-lg md:prose-xl prose-stone mx-auto
+        <!-- Main Content -->
+        <main
+            class="flex-grow max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+        >
+            <div
+                class="prose prose-lg md:prose-xl prose-stone mx-auto
         prose-headings:font-alex-brush prose-headings:font-normal prose-headings:text-brand-primary prose-headings:text-center
         prose-h1:text-6xl md:prose-h1:text-7xl prose-h1:mb-12
         prose-h2:text-5xl prose-h3:text-4xl prose-h4:text-3xl
@@ -113,75 +153,119 @@ const currentPath = new URL(Astro.request.url).pathname;
         prose-p:leading-[1.8] prose-p:text-brand-text prose-p:font-light
         prose-blockquote:border-l-brand-secondary prose-blockquote:bg-brand-bg prose-blockquote:p-6 prose-blockquote:rounded-none prose-blockquote:italic prose-blockquote:text-brand-primary prose-blockquote:font-light
         prose-img:rounded-none prose-img:shadow-sm prose-img:mx-auto
-        prose-strong:text-brand-primary prose-strong:font-semibold">
-			  <slot />
-      </div>
-		</main>
+        prose-strong:text-brand-primary prose-strong:font-semibold"
+            >
+                <slot />
+            </div>
+        </main>
 
-    <!-- Footer -->
-    <footer class="bg-brand-bg border-t border-brand-secondary/20 mt-auto py-16">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
-        <p class="text-lg font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase">Ninja Seidel</p>
-        <h3 class="text-sm font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase mb-2">Herzenergie Yoga</h3>
-        <p class="text-brand-text font-light tracking-wider text-sm">YOGA IN GEORGSMARIENHÜTTE</p>
-        <p class="text-brand-text font-light tracking-wider text-sm">
-          <a href="https://ninjaseidel.de" class="hover:text-brand-primary transition-colors">ninjaseidel.de</a>
-        </p>
-        <p class="text-brand-text font-light tracking-wider text-sm">0163-2876265</p>
-        <a href="https://www.instagram.com/herzenergieyoga/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-brand-text hover:text-brand-primary transition-colors text-sm mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-          herzenergieyoga
-        </a>
+        <!-- Footer -->
+        <footer
+            class="bg-brand-bg border-t border-brand-secondary/20 mt-auto py-16"
+        >
+            <div
+                class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4"
+            >
+                <p
+                    class="text-lg font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase"
+                >
+                    Ninja Seidel
+                </p>
+                <h3
+                    class="text-sm font-antic-didone font-light tracking-[0.2em] text-brand-primary uppercase mb-2"
+                >
+                    Herzenergie Yoga
+                </h3>
+                <p class="text-brand-text font-light tracking-wider text-sm">
+                    YOGA IN GEORGSMARIENHÜTTE
+                </p>
+                <p class="text-brand-text font-light tracking-wider text-sm">
+                    <a
+                        href="https://ninjaseidel.de"
+                        class="hover:text-brand-primary transition-colors"
+                        >ninjaseidel.de</a
+                    >
+                </p>
+                <p class="text-brand-text font-light tracking-wider text-sm">
+                    0163-2876265
+                </p>
+                <a
+                    href="https://www.instagram.com/herzenergieyoga/"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center gap-2 text-brand-text hover:text-brand-primary transition-colors text-sm mb-6"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"
+                        ></rect><path
+                            d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                        ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"
+                        ></line></svg
+                    >
+                    herzenergieyoga
+                </a>
 
-        <p class="text-sm text-brand-text/80">
-          Copyright &copy; Ninja Seidel {new Date().getFullYear()}
-        </p>
-      </div>
-    </footer>
+                <p class="text-sm text-brand-text/80">
+                    Copyright &copy; Ninja Seidel {new Date().getFullYear()}
+                </p>
+            </div>
+        </footer>
 
-    <script>
-      document.addEventListener('astro:page-load', () => {
-        // Header image zoom animation only on initial page load
-        const img = document.getElementById('header-img');
-        if (img) {
-          if (!sessionStorage.getItem('hero-animated')) {
-            img.classList.add('animate-slow-zoom-out');
-            sessionStorage.setItem('hero-animated', '1');
-          } else {
-            img.classList.remove('animate-slow-zoom-out');
-          }
-        }
+        <script>
+            document.addEventListener("astro:page-load", () => {
+                // Header image zoom animation only on initial page load
+                const img = document.getElementById("header-img");
+                if (img) {
+                    if (!sessionStorage.getItem("hero-animated")) {
+                        img.classList.add("animate-slow-zoom-out");
+                        sessionStorage.setItem("hero-animated", "1");
+                    } else {
+                        img.classList.remove("animate-slow-zoom-out");
+                    }
+                }
 
-        // Mobile menu toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+                // Mobile menu toggle
+                const btn = document.getElementById("mobile-menu-btn");
+                const menu = document.getElementById("mobile-menu");
 
-        if (btn && menu) {
-          // Remove old listener to avoid duplicates on navigation
-          const newBtn = btn.cloneNode(true);
-          btn.parentNode.replaceChild(newBtn, btn);
-          newBtn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-          });
-        }
+                if (btn && menu) {
+                    // Remove old listener to avoid duplicates on navigation
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    newBtn.addEventListener("click", () => {
+                        menu.classList.toggle("hidden");
+                    });
+                }
 
-        // Scroll animations for prose content
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, {
-          threshold: 0.1,
-          rootMargin: "0px 0px -50px 0px"
-        });
+                // Scroll animations for prose content
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("is-revealed");
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                        rootMargin: "0px 0px -50px 0px",
+                    },
+                );
 
-        document.querySelectorAll('.prose > *').forEach((el) => {
-          observer.observe(el);
-        });
-      });
-    </script>
-	</body>
+                document.querySelectorAll(".prose > *").forEach((el) => {
+                    observer.observe(el);
+                });
+            });
+        </script>
+    </body>
 </html>
