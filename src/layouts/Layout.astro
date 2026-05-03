@@ -50,22 +50,47 @@ const currentPath = new URL(Astro.request.url).pathname;
     <body class="min-h-screen flex flex-col font-light">
         <!-- Header/Nav -->
         <header class="bg-brand-bg sticky top-0 z-50 shadow-sm">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-                <div
-                    class="flex md:flex-row justify-between items-center gap-6"
-                >
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="/" class="hover:opacity-80 transition-opacity">
+            <div id="header-inner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <!-- Mobile: logo links, hamburger rechts -->
+                <div class="flex justify-between items-center md:hidden">
+                    <a href="/" class="hover:opacity-80 transition-opacity">
+                        <img
+                            src="/img/logo-ninjaseidel.png"
+                            alt="Herzenergie Yoga"
+                            class="h-16 w-auto"
+                        />
+                    </a>
+                    <button
+                        id="mobile-menu-btn"
+                        class="text-brand-text hover:text-brand-primary focus:outline-none p-2"
+                    >
+                        <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop: Logo + Nav vertikal zentriert -->
+                <div id="desktop-nav-container" class="hidden md:flex flex-col items-center gap-4 py-1">
+                    <div id="header-logo-wrapper">
+                        <a href="/" class="hover:opacity-80 transition-opacity block">
                             <img
                                 src="/img/logo-ninjaseidel.png"
                                 alt="Herzenergie Yoga"
-                                class="h-16 md:h-20 w-auto"
+                                class="h-20 w-auto"
                             />
                         </a>
                     </div>
-
-                    <!-- Desktop Navigation -->
-                    <nav class="hidden md:flex space-x-12">
+                    <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
                         {
                             navItems.map((item) => (
                                 <a
@@ -83,25 +108,6 @@ const currentPath = new URL(Astro.request.url).pathname;
                             ))
                         }
                     </nav>
-
-                    <!-- Mobile menu button -->
-                    <button
-                        id="mobile-menu-btn"
-                        class="md:hidden text-brand-text hover:text-brand-primary focus:outline-none p-2"
-                    >
-                        <svg
-                            class="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="1.5"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
 
@@ -223,7 +229,42 @@ const currentPath = new URL(Astro.request.url).pathname;
             </div>
         </footer>
 
+        <style is:global>
+            #header-logo-wrapper {
+                overflow: hidden;
+                max-height: 8rem;
+                opacity: 1;
+                transition:
+                    max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.35s ease;
+            }
+
+            header.scrolled #header-logo-wrapper {
+                max-height: 0;
+                opacity: 0;
+            }
+
+            #desktop-nav-container {
+                transition: gap 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            header.scrolled #desktop-nav-container {
+                gap: 0 !important;
+            }
+
+            #header-inner {
+                transition: padding 0.45s ease;
+            }
+
+            header.scrolled #header-inner {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+        </style>
+
         <script>
+            let navScrollAbort: AbortController | null = null;
+
             document.addEventListener("astro:page-load", () => {
                 // Header image zoom animation only on initial page load
                 const img = document.getElementById("header-img");
@@ -268,6 +309,25 @@ const currentPath = new URL(Astro.request.url).pathname;
                 document.querySelectorAll(".prose > *").forEach((el) => {
                     observer.observe(el);
                 });
+
+                // Nav shrink on scroll
+                if (navScrollAbort) navScrollAbort.abort();
+                navScrollAbort = new AbortController();
+
+                const header = document.querySelector("header");
+                const updateScrollState = () => {
+                    if (window.scrollY > 60) {
+                        header?.classList.add("scrolled");
+                    } else {
+                        header?.classList.remove("scrolled");
+                    }
+                };
+
+                window.addEventListener("scroll", updateScrollState, {
+                    passive: true,
+                    signal: navScrollAbort.signal,
+                });
+                updateScrollState();
             });
         </script>
     </body>
