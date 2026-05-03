@@ -90,6 +90,17 @@ const currentPath = new URL(Astro.request.url).pathname;
                             />
                         </a>
                     </div>
+                    <!-- Nav-Wrapper: kleines Logo ist relativ zu diesem Element positioniert -->
+                    <div id="nav-row" class="relative w-full flex justify-center">
+                        <div id="header-scroll-logo">
+                            <a href="/" class="hover:opacity-80 transition-opacity block">
+                                <img
+                                    src="/img/logo-ninjaseidel.png"
+                                    alt="Herzenergie Yoga"
+                                    class="h-9 w-auto"
+                                />
+                            </a>
+                        </div>
                     <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
                         {
                             navItems.map((item) => (
@@ -108,6 +119,7 @@ const currentPath = new URL(Astro.request.url).pathname;
                             ))
                         }
                     </nav>
+                    </div> <!-- /nav-row -->
                 </div>
             </div>
 
@@ -230,40 +242,73 @@ const currentPath = new URL(Astro.request.url).pathname;
         </footer>
 
         <style is:global>
+            /* Initialer Zustand – keine Transitions, damit beim Laden nichts flackert */
             #header-logo-wrapper {
                 overflow: hidden;
                 max-height: 8rem;
                 opacity: 1;
-                transition:
-                    max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-                    opacity 0.35s ease;
             }
 
+            #header-scroll-logo {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            /* Scrolled-Zustand */
             header.scrolled #header-logo-wrapper {
                 max-height: 0;
                 opacity: 0;
             }
 
-            #desktop-nav-container {
-                transition: gap 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
             header.scrolled #desktop-nav-container {
-                gap: 0 !important;
-            }
-
-            #header-inner {
-                transition: padding 0.45s ease;
+                gap: 0;
             }
 
             header.scrolled #header-inner {
-                padding-top: 0.5rem !important;
-                padding-bottom: 0.5rem !important;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+
+            header.scrolled #header-scroll-logo {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            /* Transitions erst aktiv nachdem JS den Initialzustand gesetzt hat */
+            header.nav-ready #header-logo-wrapper {
+                transition:
+                    max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.35s ease;
+            }
+
+            header.nav-ready #desktop-nav-container {
+                transition: gap 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            header.nav-ready #header-inner {
+                transition: padding 0.45s ease;
+            }
+
+            header.nav-ready #header-scroll-logo {
+                transition: opacity 0.4s ease 0.15s;
             }
         </style>
 
         <script>
             let navScrollAbort: AbortController | null = null;
+            let navReadyTimeout: ReturnType<typeof setTimeout> | null = null;
+            let isNavigating = false;
+
+            document.addEventListener("astro:before-preparation", () => {
+                isNavigating = true;
+                if (navReadyTimeout) clearTimeout(navReadyTimeout);
+            });
 
             document.addEventListener("astro:page-load", () => {
                 // Header image zoom animation only on initial page load
@@ -282,9 +327,8 @@ const currentPath = new URL(Astro.request.url).pathname;
                 const menu = document.getElementById("mobile-menu");
 
                 if (btn && menu) {
-                    // Remove old listener to avoid duplicates on navigation
                     const newBtn = btn.cloneNode(true);
-                    btn.parentNode.replaceChild(newBtn, btn);
+                    btn.parentNode!.replaceChild(newBtn, btn);
                     newBtn.addEventListener("click", () => {
                         menu.classList.toggle("hidden");
                     });
@@ -300,12 +344,8 @@ const currentPath = new URL(Astro.request.url).pathname;
                             }
                         });
                     },
-                    {
-                        threshold: 0.1,
-                        rootMargin: "0px 0px -50px 0px",
-                    },
+                    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
                 );
-
                 document.querySelectorAll(".prose > *").forEach((el) => {
                     observer.observe(el);
                 });
@@ -313,21 +353,46 @@ const currentPath = new URL(Astro.request.url).pathname;
                 // Nav shrink on scroll
                 if (navScrollAbort) navScrollAbort.abort();
                 navScrollAbort = new AbortController();
+                const signal = navScrollAbort.signal;
 
                 const header = document.querySelector("header");
-                const updateScrollState = () => {
-                    if (window.scrollY > 60) {
-                        header?.classList.add("scrolled");
+                if (header) {
+                    // Initialzustand sofort setzen (ohne Animation)
+                    header.classList.remove("nav-ready");
+                    const wasScrolled = sessionStorage.getItem("nav-scrolled") === "1";
+                    if (wasScrolled) {
+                        header.classList.add("scrolled");
                     } else {
-                        header?.classList.remove("scrolled");
+                        header.classList.remove("scrolled");
                     }
-                };
 
-                window.addEventListener("scroll", updateScrollState, {
-                    passive: true,
-                    signal: navScrollAbort.signal,
-                });
-                updateScrollState();
+                    const updateScrollState = () => {
+                        const isScrolled = header.classList.contains("scrolled");
+                        if (!isScrolled && window.scrollY > 80) {
+                            header.classList.add("scrolled");
+                            sessionStorage.setItem("nav-scrolled", "1");
+                        } else if (isScrolled && window.scrollY < 25) {
+                            header.classList.remove("scrolled");
+                            sessionStorage.setItem("nav-scrolled", "0");
+                        }
+                    };
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            header.classList.add("nav-ready");
+                        });
+                    });
+
+                    // Listener erst nach Smooth-Scroll-Ende aktivieren (~300ms nach page-load)
+                    if (navReadyTimeout) clearTimeout(navReadyTimeout);
+                    navReadyTimeout = setTimeout(() => {
+                        isNavigating = false;
+                        window.addEventListener("scroll", updateScrollState, {
+                            passive: true,
+                            signal,
+                        });
+                    }, 320);
+                }
             });
         </script>
     </body>
