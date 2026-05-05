@@ -20,6 +20,12 @@ const yogastile = [
     tagline: 'Atme. Spüre. Verbinde dich mit der Natur.',
     info: 'Sommerferien 2026',
   },
+  {
+    href: '/kurse/kinder-yoga',
+    name: 'Kinder-Yoga',
+    tagline: 'Spielen, atmen, wachsen – Yoga für kleine Menschen.',
+    info: 'Neue Kurse in Planung',
+  },
 ];
 ---
 
@@ -29,7 +35,7 @@ const yogastile = [
   <p>Schön, dass du hier bist. Hier findest du einen Überblick über meine Yogakurse – jeder mit seinem eigenen Charakter, jeder mit ganz viel Raum für dich.</p>
   <p>Wähle einfach den Stil, der dich gerade ruft, und erfahre mehr.</p>
 
-  <div class="not-prose my-12 grid grid-cols-1 sm:grid-cols-3 gap-px bg-brand-secondary/20">
+  <div class="not-prose my-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-brand-secondary/20">
     {yogastile.map((stil) => (
       <a href={stil.href} class="group bg-brand-bg px-6 py-10 text-center flex flex-col space-y-5 hover:bg-white transition-colors">
         <h3 class="text-5xl font-alex-brush text-brand-primary font-normal min-h-24 flex items-center justify-center">{stil.name}</h3>
