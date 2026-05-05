@@ -5,6 +5,12 @@ title: Über mich
 
 # Über mich
 
+<figure class="not-prose w-fit mx-auto mb-8 md:float-right md:mx-0 md:ml-8 md:mb-1 md:mt-1">
+  <div class="p-2.5 border border-brand-secondary/40 bg-brand-bg shadow-sm">
+    <img src="/img/ninja.jpeg" alt="Ninja Seidel" class="block w-56" />
+  </div>
+</figure>
+
 Wann hast du das letzte Mal ganz still deinem Herzen gelauscht?
 Nicht zwischen Terminen oder Gedanken –
 sondern in einem Moment, in dem alles in dir weich werden durfte…
