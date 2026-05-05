@@ -24,5 +24,6 @@ Egal, ob du gerade erst beginnst oder schon Erfahrung hast – du bist willkomme
 Ich lade dich ein, dich umzusehen, hinein zu spüren und den ersten Schritt in Richtung mehr Wohlbefinden zu gehen.
 
 Deine Reise beginnt genau hier.
+
 In Liebe,
 Deine Ninja
