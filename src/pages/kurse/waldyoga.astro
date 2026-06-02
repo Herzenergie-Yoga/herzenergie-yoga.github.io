@@ -2,12 +2,12 @@
 import Layout from "../../layouts/Layout.astro";
 
 const termine = [
-    "04. Juli 2026",
-    "11. Juli 2026",
-    "18. Juli 2026",
-    "25. Juli 2026",
-    "01. August 2026",
-    "08. August 2026",
+    { samstag: "04. Juli 2026", sonntag: "05. Juli 2026" },
+    { samstag: "11. Juli 2026", sonntag: "12. Juli 2026" },
+    { samstag: "18. Juli 2026", sonntag: "19. Juli 2026" },
+    { samstag: "25. Juli 2026", sonntag: "26. Juli 2026" },
+    { samstag: "01. August 2026", sonntag: "02. August 2026" },
+    { samstag: "08. August 2026", sonntag: "09. August 2026" },
 ];
 ---
 
@@ -58,15 +58,22 @@ const termine = [
         <p
             class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light"
         >
-            Jeden Samstag
+            Samstag &amp; Sonntag
         </p>
         <p class="text-brand-text font-light tracking-widest text-sm">
             10:45 – 12:00 Uhr
         </p>
         <ul
-            class="flex flex-col items-center gap-2 text-sm text-brand-text/80 tracking-wider list-none p-0"
+            class="flex flex-col items-center gap-4 text-sm text-brand-text/80 tracking-wider list-none p-0"
         >
-            {termine.map((datum) => <li>{datum}</li>)}
+            {
+                termine.map((wochenende) => (
+                    <li class="flex flex-col items-center gap-1">
+                        <span>Sa · {wochenende.samstag}</span>
+                        <span>So · {wochenende.sonntag}</span>
+                    </li>
+                ))
+            }
         </ul>
         <div class="pt-6 mt-6 border-t border-brand-secondary/20 space-y-2">
             <p
@@ -74,9 +81,9 @@ const termine = [
             >
                 Ausgleich
             </p>
-            <p class="text-brand-text font-light text-sm">Einzeltermin 20 €</p>
+            <p class="text-brand-text font-light text-sm">15 € pro Termin</p>
             <p class="text-brand-text font-light text-sm">
-                Alle 6 Termine: 15 € pro Einheit
+                Jeder Termin einzeln buchbar
             </p>
         </div>
     </div>
