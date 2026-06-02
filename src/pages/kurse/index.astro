@@ -1,5 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const kurse = await getCollection('kurse');
+
+const tageFor = (kursart: string) =>
+  kurse
+    .filter((k) => k.data.kursart === kursart)
+    .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
+    .map((k) => ({ wochentag: k.data.wochentag, hinweis: k.data.hinweis }));
 
 const yogastile = [
   {
@@ -40,7 +49,18 @@ const yogastile = [
       <a href={stil.href} class="group bg-brand-bg px-6 py-10 text-center flex flex-col space-y-5 hover:bg-white transition-colors">
         <h3 class="text-5xl font-alex-brush text-brand-primary font-normal min-h-24 flex items-center justify-center">{stil.name}</h3>
         <p class="text-brand-text font-light tracking-wide text-sm leading-relaxed italic min-h-12 flex items-center justify-center">{stil.tagline}</p>
-        <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{stil.info}</p>
+        {tageFor(stil.name).length > 0 ? (
+          <div class="space-y-2">
+            {tageFor(stil.name).map(({ wochentag, hinweis }) => (
+              <div>
+                <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{wochentag}</p>
+                {hinweis && <p class="text-xs italic text-brand-secondary mt-0.5">{hinweis}</p>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{stil.info}</p>
+        )}
         <div class="mt-auto pt-5 border-t border-brand-secondary/20">
           <span class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase group-hover:underline underline-offset-4">Mehr erfahren</span>
         </div>

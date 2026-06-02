@@ -71,6 +71,11 @@ const kurse = (await getCollection("kurse"))
                             {kurs.data.termine} Termine · {kurs.data.preis} Euro
                         </p>
                     </div>
+                    {kurs.data.hinweis && (
+                        <p class="text-sm italic text-brand-secondary">
+                            {kurs.data.hinweis}
+                        </p>
+                    )}
                 </div>
             ))
         }

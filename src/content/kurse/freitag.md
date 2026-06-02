@@ -7,4 +7,5 @@ kursende: 13.06.2026
 termine: 8
 preis: 120
 reihenfolge: 1
+hinweis: Nach den Sommerferien beginnt ein neuer Kurs.
 ---

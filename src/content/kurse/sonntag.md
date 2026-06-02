@@ -7,4 +7,5 @@ kursende: 07.06.2026
 termine: 8
 preis: 120
 reihenfolge: 3
+hinweis: Neuer Kurs ab 14.06. bis 27.09.
 ---
