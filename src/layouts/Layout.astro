@@ -8,14 +8,17 @@ interface Props {
 
 const { title } = Astro.props;
 
-const navItems = [
-    { href: "/", title: "Home" },
-    { href: "/about", title: "Über mich" },
+const angebote = [
     { href: "/kurse", title: "Yoga" },
     { href: "/eft", title: "EFT" },
     { href: "/aetherische-oele", title: "Ätherische Öle" },
     { href: "/cacao-ritual", title: "Cacao Ritual" },
-    { href: "/agb", title: "AGB's & dein Yoga" },
+    { href: "/specials", title: "Specials" },
+];
+
+const footerLinks = [
+    { href: "/about", title: "Über mich" },
+    { href: "/agb", title: "AGB & Dein Yoga" },
     { href: "/kontakt", title: "Kontakt" },
 ];
 
@@ -103,13 +106,13 @@ const currentPath = new URL(Astro.request.url).pathname;
                         </div>
                     <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
                         {
-                            navItems.map((item) => (
+                            angebote.map((item) => (
                                 <a
                                     href={item.href}
                                     class={`text-sm tracking-[0.1em] font-antic-didone font-light transition-colors uppercase
                   ${
                       currentPath === item.href ||
-                      (item.href !== "/" && currentPath.startsWith(item.href))
+                      currentPath.startsWith(item.href)
                           ? "text-brand-primary border-b border-brand-primary pb-1"
                           : "text-brand-text hover:text-brand-primary"
                   }`}
@@ -130,13 +133,13 @@ const currentPath = new URL(Astro.request.url).pathname;
             >
                 <div class="px-4 pt-2 pb-6 space-y-4 text-center">
                     {
-                        navItems.map((item) => (
+                        angebote.map((item) => (
                             <a
                                 href={item.href}
                                 class={`block px-3 py-2 text-sm uppercase tracking-widest font-antic-didone font-light
                 ${
                     currentPath === item.href ||
-                    (item.href !== "/" && currentPath.startsWith(item.href))
+                    currentPath.startsWith(item.href)
                         ? "text-brand-primary"
                         : "text-brand-text hover:text-brand-primary"
                 }`}
@@ -208,7 +211,18 @@ const currentPath = new URL(Astro.request.url).pathname;
                     >
                 </p>
                 <p class="text-brand-text font-light tracking-wider text-sm">
-                    0163-2876265
+                    <a
+                        href="tel:01632876265"
+                        class="hover:text-brand-primary transition-colors"
+                        >0163-2876265</a
+                    >
+                </p>
+                <p class="text-brand-text font-light tracking-wider text-sm">
+                    <a
+                        href="mailto:kontakt@ninjaseidel.de"
+                        class="hover:text-brand-primary transition-colors"
+                        >kontakt@ninjaseidel.de</a
+                    >
                 </p>
                 <a
                     href="https://www.instagram.com/herzenergieyoga/"
@@ -234,6 +248,34 @@ const currentPath = new URL(Astro.request.url).pathname;
                     >
                     herzenergieyoga
                 </a>
+
+                <nav
+                    class="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 mb-6"
+                >
+                    {
+                        footerLinks.map((item, i) => (
+                            <>
+                                {i > 0 && (
+                                    <span class="text-brand-secondary/40 select-none">
+                                        ·
+                                    </span>
+                                )}
+                                <a
+                                    href={item.href}
+                                    class={`text-xs tracking-[0.15em] font-antic-didone font-light uppercase transition-colors
+                  ${
+                      currentPath === item.href ||
+                      currentPath.startsWith(item.href)
+                          ? "text-brand-primary"
+                          : "text-brand-text hover:text-brand-primary"
+                  }`}
+                                >
+                                    {item.title}
+                                </a>
+                            </>
+                        ))
+                    }
+                </nav>
 
                 <p class="text-sm text-brand-text/80">
                     Copyright &copy; Ninja Seidel {new Date().getFullYear()}
