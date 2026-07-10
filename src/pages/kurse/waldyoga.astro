@@ -2,12 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 
 const termine = [
-    { samstag: "04. Juli 2026", sonntag: "05. Juli 2026" },
-    { samstag: "11. Juli 2026", sonntag: "12. Juli 2026" },
-    { samstag: "18. Juli 2026", sonntag: "19. Juli 2026" },
-    { samstag: "25. Juli 2026", sonntag: "26. Juli 2026" },
-    { samstag: "01. August 2026", sonntag: "02. August 2026" },
-    { samstag: "08. August 2026", sonntag: "09. August 2026" },
+    { wochentag: "Sonntag", datum: "12. Juli 2026" },
+    { wochentag: "Sonntag", datum: "19. Juli 2026" },
+    { wochentag: "Samstag", datum: "08. August 2026" },
 ];
 ---
 
@@ -55,22 +52,16 @@ const termine = [
     <div
         class="not-prose my-10 bg-brand-bg border border-brand-secondary/20 px-6 py-8 sm:px-10 sm:py-10 space-y-6 text-center"
     >
-        <p
-            class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light"
-        >
-            Samstag &amp; Sonntag
-        </p>
         <p class="text-brand-text font-light tracking-widest text-sm">
             10:45 – 12:00 Uhr
         </p>
         <ul
-            class="flex flex-col items-center gap-4 text-sm text-brand-text/80 tracking-wider list-none p-0"
+            class="flex flex-col items-center gap-2 text-sm text-brand-text/80 tracking-wider list-none p-0"
         >
             {
-                termine.map((wochenende) => (
-                    <li class="flex flex-col items-center gap-1">
-                        <span>Sa · {wochenende.samstag}</span>
-                        <span>So · {wochenende.sonntag}</span>
+                termine.map((termin) => (
+                    <li>
+                        {termin.wochentag} · {termin.datum}
                     </li>
                 ))
             }

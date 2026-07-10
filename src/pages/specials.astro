@@ -1,0 +1,83 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const termine = [
+    { wochentag: "Sonntag", datum: "23. August 2026" },
+    { wochentag: "Sonntag", datum: "06. September 2026" },
+];
+---
+
+<Layout title="Specials">
+    <h1>Yin Yoga meets ätherische Öle</h1>
+
+    <p
+        class="not-prose text-center text-brand-primary font-antic-didone tracking-[0.2em] uppercase text-sm mb-10"
+    >
+        Finde Ruhe in dir selbst · Beruhige dein Nervensystem
+    </p>
+
+    <p>
+        Tauche ein in eine wohltuende Auszeit für Körper, Geist und Seele.
+    </p>
+
+    <p>
+        Mit sanften Yin-Yoga-Positionen und der unterstützenden Kraft
+        ätherischer Öle schenkst du dir Zeit zum Loslassen, Entspannen und
+        Auftanken.
+    </p>
+
+    <p>
+        <strong>Inklusive:</strong> kostenloser ätherischer Öl-Roll-on für alle
+        Teilnehmenden!
+    </p>
+
+    <h2>Termine</h2>
+
+    <div
+        class="not-prose my-10 bg-brand-bg border border-brand-secondary/20 px-6 py-8 sm:px-10 sm:py-10 space-y-6 text-center"
+    >
+        <p class="text-brand-text font-light tracking-widest text-sm">
+            16:30 – 18:30 Uhr
+        </p>
+        <ul
+            class="flex flex-col items-center gap-2 text-sm text-brand-text/80 tracking-wider list-none p-0"
+        >
+            {
+                termine.map((termin) => (
+                    <li>
+                        {termin.wochentag} · {termin.datum}
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="pt-6 mt-6 border-t border-brand-secondary/20 space-y-2">
+            <p
+                class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase"
+            >
+                Energieausgleich
+            </p>
+            <p class="text-brand-text font-light text-sm">25 € pro Termin</p>
+            <p class="text-brand-text font-light text-sm">
+                Begrenzte Teilnehmerzahl
+            </p>
+        </div>
+    </div>
+
+    <h2>Ort</h2>
+
+    <p class="not-prose text-brand-primary font-bold text-lg">
+        Beauty Lounge Sutthausen
+    </p>
+
+    <h2>Anmeldung</h2>
+
+    <p>
+        Melde dich gerne telefonisch oder per WhatsApp bei mir an:<br />
+        <strong><a href="tel:+491632876265">0163 2876265</a></strong>
+    </p>
+
+    <blockquote>
+        Gönn dir eine Pause vom Alltag und finde zurück zu innerer Ruhe,
+        Gelassenheit und Balance.
+    </blockquote>
+</Layout>
