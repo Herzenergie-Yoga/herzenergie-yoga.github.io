@@ -23,6 +23,11 @@ const footerLinks = [
 ];
 
 const currentPath = new URL(Astro.request.url).pathname;
+
+const isLandingPage = currentPath === "/";
+const headerImgSrc = isLandingPage
+    ? "/img/ninja-landingpage-alt2.jpg"
+    : "/img/header.jpeg";
 ---
 
 <!doctype html>
@@ -157,7 +162,7 @@ const currentPath = new URL(Astro.request.url).pathname;
             class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden bg-brand-bg"
         >
             <img
-                src="/img/header.jpeg"
+                src={headerImgSrc}
                 alt="Herzenergie Yoga"
                 id="header-img"
                 class="w-full h-full object-cover"

@@ -3,18 +3,7 @@ layout: ../layouts/Layout.astro
 title: Herzenergie Yoga
 ---
 
-# Herzenergie Yoga
-
 Namasté, schön dass du hier bist und dich für Yoga interessierst.
-
-<img
-  src="/img/ninja-landingpage-web.jpg"
-  alt="Ninja Seidel in Meditationshaltung im Wald"
-  width="1200"
-  height="1803"
-  loading="lazy"
-  class="max-w-[280px] md:max-w-sm"
-/>
 
 In einer Welt, die oft laut, schnell und fordernd ist, darfst du hier einen Moment ankommen. Einen Moment für dich. Für deinen Körper, deinen Geist und deine Seele.
 
