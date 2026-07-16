@@ -7,7 +7,7 @@ Namasté, schön dass du hier bist und dich für Yoga interessierst.
 
 In einer Welt, die oft laut, schnell und fordernd ist, darfst du hier einen Moment ankommen. Einen Moment für dich. Für deinen Körper, deinen Geist und deine Seele.
 
-Auf dieser Seite verbinde ich drei kraftvolle Wege zu mehr Balance und innerer Ruhe: Yoga, EFT (Emotional Freedom Technique) und ätherische Öle. Jede dieser Methoden unterstützt dich dabei, Stress abzubauen, Blockaden zu lösen und wieder in deine natürliche Kraft zu kommen.
+In meiner Arbeit verbinde ich drei kraftvolle Wege zu mehr Balance und innerer Ruhe: Yoga, EFT (Emotional Freedom Technique) und ätherische Öle. Jede dieser Methoden unterstützt dich dabei, Stress abzubauen, Blockaden zu lösen und wieder in deine natürliche Kraft zu kommen.
 
 **Yoga** hilft dir, deinen Körper bewusst zu spüren, Spannungen loszulassen und neue Energie aufzubauen. Durch achtsame Bewegungen und bewusste Atmung findest du zurück in deine Mitte.
 
