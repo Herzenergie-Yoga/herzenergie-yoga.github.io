@@ -13,6 +13,8 @@ const kurse = defineCollection({
     preis: z.number(),
     reihenfolge: z.number(),
     hinweis: z.string().optional(),
+    ort: z.string().optional(),
+    ortAnfahrt: z.string().optional(),
   }),
 });
 

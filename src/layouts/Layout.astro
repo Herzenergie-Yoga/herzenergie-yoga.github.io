@@ -10,6 +10,7 @@ const { title } = Astro.props;
 
 const angebote = [
     { href: "/kurse", title: "Yoga" },
+    { href: "/yoga-special-event", title: "Yoga als Special Event" },
     { href: "/eft", title: "EFT" },
     { href: "/aetherische-oele", title: "Ätherische Öle" },
     { href: "/cacao-ritual", title: "Cacao Ritual" },
@@ -26,8 +27,24 @@ const currentPath = new URL(Astro.request.url).pathname;
 
 const isLandingPage = currentPath === "/";
 const headerImgSrc = isLandingPage
-    ? "/img/ninja-landingpage-alt2.jpg"
-    : "/img/header.jpeg";
+    ? "/img/ninja-landingpage-alt2.webp"
+    : "/img/header.webp";
+
+const pageHeaderImages: Record<string, string[]> = {
+    "/kurse": ["/img/yoga-1.webp", "/img/yoga-2.webp", "/img/yoga-3.webp"],
+    "/eft": ["/img/eft-1.webp", "/img/eft-2.webp"],
+    "/aetherische-oele": ["/img/aeth-oel.webp"],
+    "/cacao-ritual": ["/img/kakao-ritual.webp"],
+    "/yoga-special-event": [
+        "/img/special-event-1.webp",
+        "/img/special-event-2.webp",
+        "/img/special-event-3.webp",
+        "/img/special-event-4.webp",
+    ],
+};
+
+const normalizedPath = currentPath.replace(/\/$/, "") || "/";
+const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
 ---
 
 <!doctype html>
@@ -158,15 +175,20 @@ const headerImgSrc = isLandingPage
         </header>
 
         <!-- Header Image -->
-        <div
-            class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden bg-brand-bg"
-        >
-            <img
-                src={headerImgSrc}
-                alt="Herzenergie Yoga"
-                id="header-img"
-                class="w-full h-full object-cover"
-            />
+        <div class="w-full h-[35vh] md:h-[45vh] relative bg-brand-bg">
+            <div
+                class="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:snap-none md:overflow-hidden"
+            >
+                {
+                    headerImages.map((src) => (
+                        <img
+                            src={src}
+                            alt="Herzenergie Yoga"
+                            class="header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1"
+                        />
+                    ))
+                }
+            </div>
         </div>
 
         <!-- Main Content -->
@@ -359,15 +381,11 @@ const headerImgSrc = isLandingPage
 
             document.addEventListener("astro:page-load", () => {
                 // Header image zoom animation only on initial page load
-                const img = document.getElementById("header-img");
-                if (img) {
-                    if (!sessionStorage.getItem("hero-animated")) {
-                        img.classList.add("animate-slow-zoom-out");
-                        sessionStorage.setItem("hero-animated", "1");
-                    } else {
-                        img.classList.remove("animate-slow-zoom-out");
-                    }
-                }
+                const isFirstLoad = !sessionStorage.getItem("hero-animated");
+                document.querySelectorAll(".header-img").forEach((img) => {
+                    img.classList.toggle("animate-slow-zoom-out", isFirstLoad);
+                });
+                if (isFirstLoad) sessionStorage.setItem("hero-animated", "1");
 
                 // Mobile menu toggle
                 const btn = document.getElementById("mobile-menu-btn");
