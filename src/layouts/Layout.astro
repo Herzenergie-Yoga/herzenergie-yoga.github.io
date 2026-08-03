@@ -27,7 +27,7 @@ const currentPath = new URL(Astro.request.url).pathname;
 
 const isLandingPage = currentPath === "/";
 const headerImgSrc = isLandingPage
-    ? "/img/ninja-landingpage-alt2.webp"
+    ? "/img/startseite.webp"
     : "/img/header.webp";
 
 const pageHeaderImages: Record<string, string[]> = {
@@ -35,6 +35,7 @@ const pageHeaderImages: Record<string, string[]> = {
     "/eft": ["/img/eft-1.webp", "/img/eft-2.webp"],
     "/aetherische-oele": ["/img/aeth-oel.webp"],
     "/cacao-ritual": ["/img/kakao-ritual.webp"],
+    "/specials": ["/img/specials.webp"],
     "/yoga-special-event": [
         "/img/special-event-1.webp",
         "/img/special-event-2.webp",
@@ -43,8 +44,23 @@ const pageHeaderImages: Record<string, string[]> = {
     ],
 };
 
+// Hochformat-Motive brauchen einen verschobenen Ausschnitt, sonst faellt das Motiv
+// aus dem breiten Header-Streifen (Startseite: Gesicht, Cacao Ritual: Schale).
+const pageHeaderPositions: Record<string, string> = {
+    "/": "object-[50%_33%]",
+    "/cacao-ritual": "object-[50%_80%]",
+};
+
+const pageHeaderHeights: Record<string, string> = {
+    "/cacao-ritual": "h-[45vh] md:h-[65vh]",
+};
+
+const DEFAULT_HEADER_HEIGHT = "h-[35vh] md:h-[45vh]";
+
 const normalizedPath = currentPath.replace(/\/$/, "") || "/";
 const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
+const headerImgPosition = pageHeaderPositions[normalizedPath] ?? "object-center";
+const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
 ---
 
 <!doctype html>
@@ -175,7 +191,7 @@ const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
         </header>
 
         <!-- Header Image -->
-        <div class="w-full h-[35vh] md:h-[45vh] relative bg-brand-bg">
+        <div class:list={["w-full relative bg-brand-bg", headerHeight]}>
             <div
                 class="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:snap-none md:overflow-hidden"
             >
@@ -184,7 +200,10 @@ const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
                         <img
                             src={src}
                             alt="Herzenergie Yoga"
-                            class="header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1"
+                            class:list={[
+                                "header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1",
+                                headerImgPosition,
+                            ]}
                         />
                     ))
                 }

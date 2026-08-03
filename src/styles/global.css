@@ -11,6 +11,12 @@
   --color-brand-text: #737373;
 }
 
+/* Typography plugin adds curly quotes around blockquotes – not wanted here */
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
+
 /* Progressive enhancement for scroll animations */
 .js-enabled .prose > * {
   opacity: 0;
