@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import HeaderCarousel from "../components/header/HeaderCarousel.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -96,8 +97,10 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                 <div class="flex justify-between items-center md:hidden">
                     <a href="/" class="hover:opacity-80 transition-opacity">
                         <img
-                            src="/img/logo-ninjaseidel.png"
+                            src="/img/logo-ninjaseidel.webp"
                             alt="Herzenergie Yoga"
+                            width="299"
+                            height="144"
                             class="h-16 w-auto"
                         />
                     </a>
@@ -125,8 +128,10 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                     <div id="header-logo-wrapper">
                         <a href="/" class="hover:opacity-80 transition-opacity block">
                             <img
-                                src="/img/logo-ninjaseidel.png"
+                                src="/img/logo-ninjaseidel.webp"
                                 alt="Herzenergie Yoga"
+                                width="299"
+                                height="144"
                                 class="h-20 w-auto"
                             />
                         </a>
@@ -136,8 +141,10 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                         <div id="header-scroll-logo">
                             <a href="/" class="hover:opacity-80 transition-opacity block">
                                 <img
-                                    src="/img/logo-ninjaseidel.png"
+                                    src="/img/logo-ninjaseidel.webp"
                                     alt="Herzenergie Yoga"
+                                    width="299"
+                                    height="144"
                                     class="h-9 w-auto"
                                 />
                             </a>
@@ -191,24 +198,11 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
         </header>
 
         <!-- Header Image -->
-        <div class:list={["w-full relative bg-brand-bg", headerHeight]}>
-            <div
-                class="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:snap-none md:overflow-hidden"
-            >
-                {
-                    headerImages.map((src) => (
-                        <img
-                            src={src}
-                            alt="Herzenergie Yoga"
-                            class:list={[
-                                "header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1",
-                                headerImgPosition,
-                            ]}
-                        />
-                    ))
-                }
-            </div>
-        </div>
+        <HeaderCarousel
+            images={headerImages}
+            imgPosition={headerImgPosition}
+            height={headerHeight}
+        />
 
         <!-- Main Content -->
         <main

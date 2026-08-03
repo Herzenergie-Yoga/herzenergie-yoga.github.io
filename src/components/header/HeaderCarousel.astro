@@ -1,0 +1,221 @@
+---
+interface Props {
+    images: string[];
+    imgPosition: string;
+    height: string;
+}
+
+const { images, imgPosition, height } = Astro.props;
+
+// Ab md liegen alle Bilder nebeneinander im Streifen – dort gibt es nichts zu blättern.
+const hasControls = images.length > 1;
+---
+
+<div
+    class:list={["w-full relative bg-brand-bg", height]}
+    data-header-carousel
+    role={hasControls ? "region" : undefined}
+    aria-label={hasControls ? "Bildergalerie" : undefined}
+>
+    <div
+        class="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:snap-none md:overflow-hidden"
+        data-carousel-track
+    >
+        {
+            images.map((src) => (
+                <img
+                    src={src}
+                    alt="Herzenergie Yoga"
+                    class:list={[
+                        "header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1",
+                        imgPosition,
+                    ]}
+                />
+            ))
+        }
+    </div>
+
+    {
+        hasControls && (
+            <>
+                <button
+                    type="button"
+                    class="glass-control absolute left-3 top-1/2 -translate-y-1/2 md:hidden"
+                    aria-label="Vorheriges Bild"
+                    data-carousel-prev
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m14.5 5-6 7 6 7" />
+                    </svg>
+                </button>
+
+                <button
+                    type="button"
+                    class="glass-control absolute right-3 top-1/2 -translate-y-1/2 md:hidden"
+                    aria-label="Nächstes Bild"
+                    data-carousel-next
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m9.5 5 6 7-6 7" />
+                    </svg>
+                </button>
+            </>
+        )
+    }
+</div>
+
+<style>
+    /* Liquid Glass: durchscheinende Linse mit Lichtkante und Glanzlicht oben links */
+    .glass-control {
+        display: grid;
+        place-items: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 9999px;
+        color: #fff;
+        background:
+            radial-gradient(
+                125% 90% at 30% 8%,
+                rgb(255 255 255 / 0.5),
+                rgb(255 255 255 / 0) 60%
+            ),
+            rgb(255 255 255 / 0.16);
+        /* Nur unpraefixiert notieren – Lightning CSS ergaenzt -webkit- selbst.
+           Beide von Hand zu schreiben fuehrt dazu, dass eine Variante wegminifiziert wird. */
+        backdrop-filter: blur(14px) saturate(180%);
+        border: 1px solid rgb(255 255 255 / 0.4);
+        box-shadow:
+            0 6px 20px rgb(0 0 0 / 0.18),
+            inset 0 1px 1px rgb(255 255 255 / 0.6),
+            inset 0 -8px 14px rgb(255 255 255 / 0.1);
+        transition:
+            transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+            background-color 220ms ease,
+            opacity 220ms ease;
+    }
+
+    /* Safari vor 18 kennt nur die praefixierte Variante. Sie steht bewusst in einem
+       eigenen Block – neben der unpraefixierten in derselben Regel wird eine der
+       beiden wegminifiziert. */
+    @supports (-webkit-backdrop-filter: blur(1px)) {
+        .glass-control {
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+        }
+    }
+
+    /* Ohne backdrop-filter (aeltere Browser) waere die Flaeche zu transparent */
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .glass-control {
+            background: rgb(120 120 120 / 0.55);
+        }
+    }
+
+    .glass-control svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.35));
+    }
+
+    .glass-control:hover {
+        background:
+            radial-gradient(
+                125% 90% at 30% 8%,
+                rgb(255 255 255 / 0.6),
+                rgb(255 255 255 / 0) 60%
+            ),
+            rgb(255 255 255 / 0.26);
+        /* Nur scale – die vertikale Zentrierung laeuft ueber die translate-Property
+           von Tailwind und wuerde sich mit einem transform hier addieren. */
+        transform: scale(1.06);
+    }
+
+    /* Kurzes Eindruecken beim Antippen – die "fluessige" Note */
+    .glass-control:active {
+        transform: scale(0.92);
+    }
+
+    .glass-control:focus-visible {
+        outline: 2px solid rgb(255 255 255 / 0.9);
+        outline-offset: 2px;
+    }
+
+    .glass-control:disabled {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .glass-control {
+            transition: none;
+        }
+
+        .glass-control:hover,
+        .glass-control:active {
+            transform: none;
+        }
+    }
+</style>
+
+<script>
+    let carouselAbort: AbortController | null = null;
+
+    function initHeaderCarousels() {
+        carouselAbort?.abort();
+        carouselAbort = new AbortController();
+        const { signal } = carouselAbort;
+
+        document
+            .querySelectorAll<HTMLElement>("[data-header-carousel]")
+            .forEach((root) => {
+                const track = root.querySelector<HTMLElement>("[data-carousel-track]");
+                const prev = root.querySelector<HTMLButtonElement>("[data-carousel-prev]");
+                const next = root.querySelector<HTMLButtonElement>("[data-carousel-next]");
+                if (!track || !prev || !next) return;
+
+                const step = (direction: number) => {
+                    const prefersReducedMotion = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)",
+                    ).matches;
+                    track.scrollBy({
+                        left: direction * track.clientWidth,
+                        behavior: prefersReducedMotion ? "auto" : "smooth",
+                    });
+                };
+
+                // Am jeweiligen Ende gibt es nichts mehr zu blättern
+                const syncDisabledState = () => {
+                    const maxScroll = track.scrollWidth - track.clientWidth;
+                    prev.disabled = track.scrollLeft <= 1;
+                    next.disabled = track.scrollLeft >= maxScroll - 1;
+                };
+
+                prev.addEventListener("click", () => step(-1), { signal });
+                next.addEventListener("click", () => step(1), { signal });
+                track.addEventListener("scroll", syncDisabledState, {
+                    passive: true,
+                    signal,
+                });
+                window.addEventListener("resize", syncDisabledState, { signal });
+
+                syncDisabledState();
+            });
+    }
+
+    document.addEventListener("astro:page-load", initHeaderCarousels);
+</script>
