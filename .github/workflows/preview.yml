@@ -41,6 +41,7 @@ jobs:
         run: |
           npm run build
           echo "ninjaseidel.de" > ./dist/CNAME
+          touch ./dist/.nojekyll
 
       - name: Deploy preview to GitHub Pages
         uses: rossjrw/pr-preview-action@v1
