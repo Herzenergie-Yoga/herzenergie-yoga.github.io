@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { toHref } from '../../utils/paths';
 
 const kurse = await getCollection('kurse');
 
@@ -41,7 +42,7 @@ const yogastile = [
   <div class="not-prose my-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
     {yogastile.map((stil, i) => (
       <a
-        href={stil.href}
+        href={toHref(stil.href)}
         class:list={[
           'group border border-brand-secondary/20 px-6 py-10 text-center flex flex-col space-y-5 hover:bg-white transition-colors',
           i === yogastile.length - 1 && yogastile.length % 2 === 1 && 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-1rem)]',

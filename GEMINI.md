@@ -10,7 +10,7 @@ This file provides context and guidelines for Gemini CLI when working with code,
 - **Language**: German (all public-facing content is in German)
 - **Framework**: [Astro](https://astro.build) (Static Site Generation)
 - **Styling**: Tailwind CSS v4 via `@tailwindcss/vite` plugin and `@tailwindcss/typography`
-- **Deployment**: GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`)
+- **Deployment**: GitHub Pages via `gh-pages` branch (`.github/workflows/deploy.yml` and `.github/workflows/preview.yml`)
 
 ---
 
@@ -57,9 +57,11 @@ npm run preview
 │   │       ├── hatha-yoga.astro # Hatha Yoga page (/kurse/hatha-yoga)
 │   │       ├── yin-yoga.astro   # Yin Yoga page (/kurse/yin-yoga)
 │   │       └── kinder-yoga.astro# Kinder Yoga page (/kurse/kinder-yoga)
-│   └── styles/
-│       └── global.css          # Tailwind v4 configuration, theme tokens, custom utilities
-├── astro.config.mjs            # Astro configuration (Vite Tailwind plugin, sitemap, prefetching)
+│   ├── styles/
+│   │       └── global.css      # Tailwind v4 configuration, theme tokens, custom utilities
+│   └── utils/
+│           └── paths.ts        # Base-aware URL helper `toHref()` for root & PR preview subpaths
+├── astro.config.mjs            # Astro configuration (Vite Tailwind plugin, sitemap, prefetching, base path)
 └── package.json                # Node.js dependencies and scripts
 ```
 
@@ -73,9 +75,10 @@ npm run preview
   - `title: "..."` (Page title)
 - Dynamic pages and complex views use `.astro` components (e.g. `src/pages/kurse/*.astro`, `src/pages/specials.astro`).
 
-### 2. Layout & Header Carousel
+### 2. Layout, Paths & Header Carousel
 - Single master layout (`src/layouts/Layout.astro`) manages:
   - Header navigation (menu arrays `angebote` and `footerLinks`).
+  - Base-aware link resolution using `toHref()` from `src/utils/paths.ts` for preview subpath support (`/pr-preview/pr-XX/`).
   - Hero header image carousel (`<HeaderCarousel />` from `src/components/header/HeaderCarousel.astro`).
   - View transitions via Astro `<ClientRouter />`.
   - Global `<slot />` main content container with `.prose` styling.

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { toHref } from '../../utils/paths';
 
 const kurse = (await getCollection('kurse'))
   .filter((k) => k.data.kursart === 'Hatha Yoga')
@@ -9,7 +10,7 @@ const kurse = (await getCollection('kurse'))
 
 <Layout title="Hatha Yoga">
   <p class="not-prose text-center">
-    <a href="/kurse" class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
+    <a href={toHref('/kurse')} class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
   </p>
 
   <h1>Hatha Yoga</h1>

@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import HeaderCarousel from "../components/header/HeaderCarousel.astro";
+import { toHref } from "../utils/paths";
 import "../styles/global.css";
 
 interface Props {
@@ -24,25 +25,27 @@ const footerLinks = [
     { href: "/kontakt", title: "Kontakt" },
 ];
 
-const currentPath = new URL(Astro.request.url).pathname;
+const rawPath = new URL(Astro.request.url).pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const normalizedPath = (base ? rawPath.replace(new RegExp(`^${base}`), "") : rawPath).replace(/\/$/, "") || "/";
 
-const isLandingPage = currentPath === "/";
+const isLandingPage = normalizedPath === "/";
 const headerImgSrc = isLandingPage
-    ? "/img/startseite.webp"
-    : "/img/header.webp";
+    ? toHref("/img/startseite.webp")
+    : toHref("/img/header.webp");
 
 const pageHeaderImages: Record<string, string[]> = {
-    "/kurse": ["/img/yoga-1.webp", "/img/yoga-2.webp", "/img/yoga-3.webp"],
-    "/eft": ["/img/eft-1.webp", "/img/eft-2.webp"],
-    "/aetherische-oele": ["/img/aeth-oel.webp"],
-    "/cacao-ritual": ["/img/kakao-ritual.webp"],
-    "/specials": ["/img/specials.webp"],
+    "/kurse": ["/img/yoga-1.webp", "/img/yoga-2.webp", "/img/yoga-3.webp"].map(toHref),
+    "/eft": ["/img/eft-1.webp", "/img/eft-2.webp"].map(toHref),
+    "/aetherische-oele": ["/img/aeth-oel.webp"].map(toHref),
+    "/cacao-ritual": ["/img/kakao-ritual.webp"].map(toHref),
+    "/specials": ["/img/specials.webp"].map(toHref),
     "/yoga-special-event": [
         "/img/special-event-1.webp",
         "/img/special-event-2.webp",
         "/img/special-event-3.webp",
         "/img/special-event-4.webp",
-    ],
+    ].map(toHref),
 };
 
 // Hochformat-Motive brauchen einen verschobenen Ausschnitt, sonst faellt das Motiv
@@ -58,7 +61,6 @@ const pageHeaderHeights: Record<string, string> = {
 
 const DEFAULT_HEADER_HEIGHT = "h-[35vh] md:h-[45vh]";
 
-const normalizedPath = currentPath.replace(/\/$/, "") || "/";
 const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
 const headerImgPosition = pageHeaderPositions[normalizedPath] ?? "object-center";
 const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
@@ -73,7 +75,7 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
             content="Herzenergie Yoga - YOGA IN GEORGSMARIENHÜTTE"
         />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href={toHref("/favicon.ico")} />
         <meta name="generator" content={Astro.generator} />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -95,9 +97,9 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
             <div id="header-inner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <!-- Mobile: logo links, hamburger rechts -->
                 <div class="flex justify-between items-center md:hidden">
-                    <a href="/" class="hover:opacity-80 transition-opacity">
+                    <a href={toHref("/")} class="hover:opacity-80 transition-opacity">
                         <img
-                            src="/img/logo-ninjaseidel.webp"
+                            src={toHref("/img/logo-ninjaseidel.webp")}
                             alt="Herzenergie Yoga"
                             width="299"
                             height="144"
@@ -126,9 +128,9 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                 <!-- Desktop: Logo + Nav vertikal zentriert -->
                 <div id="desktop-nav-container" class="hidden md:flex flex-col items-center gap-4 py-1">
                     <div id="header-logo-wrapper">
-                        <a href="/" class="hover:opacity-80 transition-opacity block">
+                        <a href={toHref("/")} class="hover:opacity-80 transition-opacity block">
                             <img
-                                src="/img/logo-ninjaseidel.webp"
+                                src={toHref("/img/logo-ninjaseidel.webp")}
                                 alt="Herzenergie Yoga"
                                 width="299"
                                 height="144"
@@ -139,13 +141,14 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                     <!-- Nav-Wrapper: kleines Logo ist relativ zu diesem Element positioniert -->
                     <div id="nav-row" class="relative w-full flex justify-center">
                         <div id="header-scroll-logo">
-                            <a href="/" class="hover:opacity-80 transition-opacity block">
+                            <a href={toHref("/")} class="hover:opacity-80 transition-opacity block">
                                 <img
-                                    src="/img/logo-ninjaseidel.webp"
+                                    src={toHref("/img/logo-ninjaseidel.webp")}
                                     alt="Herzenergie Yoga"
                                     width="299"
                                     height="144"
                                     class="h-9 w-auto"
+                                    loading="eager"
                                 />
                             </a>
                         </div>
@@ -153,11 +156,11 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                         {
                             angebote.map((item) => (
                                 <a
-                                    href={item.href}
+                                    href={toHref(item.href)}
                                     class={`text-sm tracking-[0.1em] font-antic-didone font-light transition-colors uppercase
                   ${
-                      currentPath === item.href ||
-                      currentPath.startsWith(item.href)
+                      normalizedPath === item.href ||
+                      (item.href !== "/" && normalizedPath.startsWith(item.href))
                           ? "text-brand-primary border-b border-brand-primary pb-1"
                           : "text-brand-text hover:text-brand-primary"
                   }`}
@@ -180,11 +183,11 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                     {
                         angebote.map((item) => (
                             <a
-                                href={item.href}
+                                href={toHref(item.href)}
                                 class={`block px-3 py-2 text-sm uppercase tracking-widest font-antic-didone font-light
                 ${
-                    currentPath === item.href ||
-                    currentPath.startsWith(item.href)
+                    normalizedPath === item.href ||
+                    (item.href !== "/" && normalizedPath.startsWith(item.href))
                         ? "text-brand-primary"
                         : "text-brand-text hover:text-brand-primary"
                 }`}
@@ -301,11 +304,11 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                                     </span>
                                 )}
                                 <a
-                                    href={item.href}
+                                    href={toHref(item.href)}
                                     class={`text-xs tracking-[0.15em] font-antic-didone font-light uppercase transition-colors
                   ${
-                      currentPath === item.href ||
-                      currentPath.startsWith(item.href)
+                      normalizedPath === item.href ||
+                      (item.href !== "/" && normalizedPath.startsWith(item.href))
                           ? "text-brand-primary"
                           : "text-brand-text hover:text-brand-primary"
                   }`}
@@ -393,6 +396,18 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
             });
 
             document.addEventListener("astro:page-load", () => {
+                // If running in a subpath preview, prefix root-relative markdown images and links
+                const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+                if (base) {
+                    document.querySelectorAll(".prose img[src^='/'], .prose a[href^='/']").forEach((el) => {
+                        const attr = el.tagName === "IMG" ? "src" : "href";
+                        const val = el.getAttribute(attr);
+                        if (val && val.startsWith("/") && !val.startsWith("//") && !val.startsWith(base)) {
+                            el.setAttribute(attr, base + val);
+                        }
+                    });
+                }
+
                 // Header image zoom animation only on initial page load
                 const isFirstLoad = !sessionStorage.getItem("hero-animated");
                 document.querySelectorAll(".header-img").forEach((img) => {

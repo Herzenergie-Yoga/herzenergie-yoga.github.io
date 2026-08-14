@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { toHref } from '../../utils/paths';
 ---
 
 <Layout title="Kinder-Yoga">
   <p class="not-prose text-center">
-    <a href="/kurse" class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
+    <a href={toHref('/kurse')} class="text-sm tracking-[0.15em] uppercase font-antic-didone text-brand-secondary hover:text-brand-primary">← Alle Kurse</a>
   </p>
 
   <h1>Kinder-Yoga</h1>
@@ -35,6 +36,6 @@ import Layout from '../../layouts/Layout.astro';
 
   <h2>Neue Kurse in Planung</h2>
 
-  <p>Ich freue mich sehr, Kinder-Yoga in mein Angebot aufzunehmen. Die konkreten Kurstermine befinden sich gerade in Planung – melde dich gerne über die <a href="/kontakt">Kontaktseite</a>, wenn du Interesse hast oder benachrichtigt werden möchtest, sobald die Kurse starten.</p>
+  <p>Ich freue mich sehr, Kinder-Yoga in mein Angebot aufzunehmen. Die konkreten Kurstermine befinden sich gerade in Planung – melde dich gerne über die <a href={toHref('/kontakt')}>Kontaktseite</a>, wenn du Interesse hast oder benachrichtigt werden möchtest, sobald die Kurse starten.</p>
 
 </Layout>

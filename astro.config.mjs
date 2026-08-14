@@ -1,12 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+const base = process.env.ASTRO_BASE || '/';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://herzenergie-yoga.github.io/',
+  site: process.env.ASTRO_SITE || 'https://ninjaseidel.de',
+  base: base,
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport'
@@ -14,6 +16,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-
   integrations: [sitemap()]
 });
