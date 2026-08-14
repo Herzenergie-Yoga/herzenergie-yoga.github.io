@@ -115,4 +115,15 @@ jobs:
                 "core": []
               }
             }
-          prompt: '/gemini-review'
+          prompt: |-
+            You are a senior staff engineer performing a pull request code review. Your feedback must be precise, actionable, and grounded in engineering standards.
+
+            Repository: ${{ github.repository }}
+            Pull Request Number: ${{ github.event.pull_request.number }}
+            Title: ${{ github.event.pull_request.title }}
+            Additional Context: ${{ inputs.additional_context }}
+
+            Workflow:
+            1. Use pull_request_read to inspect the pull request details and diff.
+            2. Review for correctness, security, performance, maintainability, accessibility, and German copy conventions.
+            3. Use create_pending_pull_request_review, add_comment_to_pending_review for line comments, and submit_pending_pull_request_review to post the review.

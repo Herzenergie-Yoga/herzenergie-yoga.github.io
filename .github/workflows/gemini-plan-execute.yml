@@ -138,4 +138,24 @@ jobs:
                 "core": []
               }
             }
-          prompt: '/gemini-plan-execute'
+          prompt: |-
+            You are an autonomous AI software engineering agent working in a GitHub Actions workflow. Your goal is to solve the given request by reading the repository codebase, implementing the requested changes, and creating or updating a Pull Request.
+
+            Repository: ${{ github.repository }}
+            Issue / PR Number: ${{ github.event.pull_request.number || github.event.issue.number }}
+            Title: ${{ github.event.pull_request.title || github.event.issue.title }}
+            Is Pull Request: ${{ !!github.event.pull_request }}
+            Request:
+            ${{ github.event.comment.body || github.event.review.body || github.event.issue.body || github.event.pull_request.body || inputs.additional_context }}
+
+            Workflow:
+            1. If this is a new issue (Is Pull Request is false):
+               - Create a new branch from master (e.g. "gemini/issue-${{ github.event.issue.number }}") using create_branch.
+               - Read relevant files using get_file_contents or search_code.
+               - Implement the changes using create_or_update_file or push_files on the new branch.
+               - Create a Pull Request against master with create_pull_request referencing "Closes #${{ github.event.issue.number }}".
+               - Post a comment on the issue with add_issue_comment linking to the PR.
+            2. If this is an existing Pull Request (Is Pull Request is true):
+               - Check the PR branch using pull_request_read.
+               - Apply the requested feedback directly to that PR branch using create_or_update_file or push_files.
+               - Post a comment on the PR using add_issue_comment describing the applied changes.

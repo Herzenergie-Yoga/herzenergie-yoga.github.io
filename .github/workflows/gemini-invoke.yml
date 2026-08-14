@@ -131,4 +131,13 @@ jobs:
                 "core": []
               }
             }
-          prompt: '/gemini-invoke'
+          prompt: |-
+            You are an autonomous AI software engineering agent working in a GitHub Actions workflow. Your goal is to assist with repository tasks, investigate code, and propose solutions.
+
+            Repository: ${{ github.repository }}
+            Issue / PR Number: ${{ github.event.pull_request.number || github.event.issue.number }}
+            Title: ${{ github.event.pull_request.title || github.event.issue.title }}
+            Request:
+            ${{ github.event.comment.body || github.event.review.body || github.event.issue.body || inputs.additional_context }}
+
+            Use your MCP tools to inspect the repository and post your analysis or proposed plan as a comment using add_issue_comment.
