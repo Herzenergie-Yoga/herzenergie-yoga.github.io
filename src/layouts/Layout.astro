@@ -48,18 +48,25 @@ const pageHeaderImages: Record<string, string[]> = {
     ].map(toHref),
 };
 
-// Hochformat-Motive brauchen einen verschobenen Ausschnitt, sonst faellt das Motiv
-// aus dem breiten Header-Streifen (Startseite: Gesicht, Cacao Ritual: Schale).
 const pageHeaderPositions: Record<string, string> = {
-    "/": "object-[50%_33%]",
-    "/cacao-ritual": "object-[50%_80%]",
+    "/": "object-[50%_25%] sm:object-[50%_28%] md:object-[50%_32%]",
+    "/aetherische-oele": "object-[50%_20%] sm:object-[50%_24%] md:object-[50%_28%]",
+    "/cacao-ritual": "object-[50%_30%] sm:object-[50%_34%] md:object-[50%_36%]",
+    "/eft": "object-[50%_24%] sm:object-[50%_28%] md:object-[50%_30%]",
+    "/about": "object-[50%_35%]",
 };
 
 const pageHeaderHeights: Record<string, string> = {
-    "/cacao-ritual": "h-[45vh] md:h-[65vh]",
+    "/": "h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[85vh] min-h-[460px] md:min-h-[600px] lg:min-h-[700px] max-h-[900px]",
+    "/aetherische-oele": "h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] min-h-[440px] md:min-h-[580px] lg:min-h-[680px] max-h-[850px]",
+    "/cacao-ritual": "h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] min-h-[440px] md:min-h-[580px] lg:min-h-[680px] max-h-[850px]",
+    "/eft": "h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] min-h-[420px] md:min-h-[550px] lg:min-h-[650px] max-h-[800px]",
+    "/kurse": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
+    "/yoga-special-event": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
+    "/specials": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
 };
 
-const DEFAULT_HEADER_HEIGHT = "h-[35vh] md:h-[45vh]";
+const DEFAULT_HEADER_HEIGHT = "h-[40vh] sm:h-[50vh] md:h-[55vh] min-h-[360px] md:min-h-[450px]";
 
 const headerImages = pageHeaderImages[normalizedPath] ?? [headerImgSrc];
 const headerImgPosition = pageHeaderPositions[normalizedPath] ?? "object-center";

@@ -22,7 +22,7 @@ const hasControls = images.length > 1;
         data-carousel-track
     >
         {
-            images.map((src) => (
+            images.map((src, index) => (
                 <img
                     src={src}
                     alt="Herzenergie Yoga"
@@ -30,6 +30,7 @@ const hasControls = images.length > 1;
                         "header-img w-full h-full object-cover shrink-0 snap-start md:w-auto md:flex-1",
                         imgPosition,
                     ]}
+                    data-slide-index={index}
                 />
             ))
         }
@@ -40,7 +41,7 @@ const hasControls = images.length > 1;
             <>
                 <button
                     type="button"
-                    class="glass-control absolute left-3 top-1/2 -translate-y-1/2 md:hidden"
+                    class="glass-control absolute left-3 top-1/2 -translate-y-1/2 md:hidden z-10"
                     aria-label="Vorheriges Bild"
                     data-carousel-prev
                 >
@@ -59,7 +60,7 @@ const hasControls = images.length > 1;
 
                 <button
                     type="button"
-                    class="glass-control absolute right-3 top-1/2 -translate-y-1/2 md:hidden"
+                    class="glass-control absolute right-3 top-1/2 -translate-y-1/2 md:hidden z-10"
                     aria-label="Nächstes Bild"
                     data-carousel-next
                 >
@@ -75,6 +76,19 @@ const hasControls = images.length > 1;
                         <path d="m9.5 5 6 7-6 7" />
                     </svg>
                 </button>
+
+                <!-- Indicator dots for mobile/tablet -->
+                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 md:hidden z-10" data-carousel-dots>
+                    {images.map((_, i) => (
+                        <button
+                            type="button"
+                            class="carousel-dot w-2 h-2 rounded-full bg-white/50 transition-all duration-300 aria-current:w-5 aria-current:bg-white"
+                            aria-label={`Zu Bild ${i + 1}`}
+                            aria-current={i === 0 ? "true" : "false"}
+                            data-dot-index={i}
+                        />
+                    ))}
+                </div>
             </>
         )
     }
@@ -95,13 +109,11 @@ const hasControls = images.length > 1;
                 rgb(255 255 255 / 0.5),
                 rgb(255 255 255 / 0) 60%
             ),
-            rgb(255 255 255 / 0.16);
-        /* Nur unpraefixiert notieren – Lightning CSS ergaenzt -webkit- selbst.
-           Beide von Hand zu schreiben fuehrt dazu, dass eine Variante wegminifiziert wird. */
+            rgb(255 255 255 / 0.22);
         backdrop-filter: blur(14px) saturate(180%);
-        border: 1px solid rgb(255 255 255 / 0.4);
+        border: 1px solid rgb(255 255 255 / 0.45);
         box-shadow:
-            0 6px 20px rgb(0 0 0 / 0.18),
+            0 6px 20px rgb(0 0 0 / 0.2),
             inset 0 1px 1px rgb(255 255 255 / 0.6),
             inset 0 -8px 14px rgb(255 255 255 / 0.1);
         transition:
@@ -110,42 +122,35 @@ const hasControls = images.length > 1;
             opacity 220ms ease;
     }
 
-    /* Safari vor 18 kennt nur die praefixierte Variante. Sie steht bewusst in einem
-       eigenen Block – neben der unpraefixierten in derselben Regel wird eine der
-       beiden wegminifiziert. */
     @supports (-webkit-backdrop-filter: blur(1px)) {
         .glass-control {
             -webkit-backdrop-filter: blur(14px) saturate(180%);
         }
     }
 
-    /* Ohne backdrop-filter (aeltere Browser) waere die Flaeche zu transparent */
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
         .glass-control {
-            background: rgb(120 120 120 / 0.55);
+            background: rgb(120 120 120 / 0.6);
         }
     }
 
     .glass-control svg {
         width: 1.25rem;
         height: 1.25rem;
-        filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.35));
+        filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
     }
 
     .glass-control:hover {
         background:
             radial-gradient(
                 125% 90% at 30% 8%,
-                rgb(255 255 255 / 0.6),
+                rgb(255 255 255 / 0.65),
                 rgb(255 255 255 / 0) 60%
             ),
-            rgb(255 255 255 / 0.26);
-        /* Nur scale – die vertikale Zentrierung laeuft ueber die translate-Property
-           von Tailwind und wuerde sich mit einem transform hier addieren. */
+            rgb(255 255 255 / 0.32);
         transform: scale(1.06);
     }
 
-    /* Kurzes Eindruecken beim Antippen – die "fluessige" Note */
     .glass-control:active {
         transform: scale(0.92);
     }
@@ -155,9 +160,8 @@ const hasControls = images.length > 1;
         outline-offset: 2px;
     }
 
-    .glass-control:disabled {
-        opacity: 0.3;
-        pointer-events: none;
+    .carousel-dot {
+        box-shadow: 0 1px 4px rgb(0 0 0 / 0.3);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -186,34 +190,65 @@ const hasControls = images.length > 1;
                 const track = root.querySelector<HTMLElement>("[data-carousel-track]");
                 const prev = root.querySelector<HTMLButtonElement>("[data-carousel-prev]");
                 const next = root.querySelector<HTMLButtonElement>("[data-carousel-next]");
-                if (!track || !prev || !next) return;
+                const dots = root.querySelectorAll<HTMLButtonElement>("[data-dot-index]");
+                if (!track) return;
 
                 const step = (direction: number) => {
                     const prefersReducedMotion = window.matchMedia(
                         "(prefers-reduced-motion: reduce)",
                     ).matches;
-                    track.scrollBy({
-                        left: direction * track.clientWidth,
-                        behavior: prefersReducedMotion ? "auto" : "smooth",
+                    const maxScroll = track.scrollWidth - track.clientWidth;
+
+                    // Continuous looping navigation
+                    if (direction > 0 && track.scrollLeft >= maxScroll - 10) {
+                        track.scrollTo({
+                            left: 0,
+                            behavior: prefersReducedMotion ? "auto" : "smooth",
+                        });
+                    } else if (direction < 0 && track.scrollLeft <= 10) {
+                        track.scrollTo({
+                            left: maxScroll,
+                            behavior: prefersReducedMotion ? "auto" : "smooth",
+                        });
+                    } else {
+                        track.scrollBy({
+                            left: direction * track.clientWidth,
+                            behavior: prefersReducedMotion ? "auto" : "smooth",
+                        });
+                    }
+                };
+
+                const updateActiveDot = () => {
+                    if (dots.length === 0) return;
+                    const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+                    dots.forEach((dot, index) => {
+                        dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
                     });
                 };
 
-                // Am jeweiligen Ende gibt es nichts mehr zu blättern
-                const syncDisabledState = () => {
-                    const maxScroll = track.scrollWidth - track.clientWidth;
-                    prev.disabled = track.scrollLeft <= 1;
-                    next.disabled = track.scrollLeft >= maxScroll - 1;
-                };
+                prev?.addEventListener("click", () => step(-1), { signal });
+                next?.addEventListener("click", () => step(1), { signal });
 
-                prev.addEventListener("click", () => step(-1), { signal });
-                next.addEventListener("click", () => step(1), { signal });
-                track.addEventListener("scroll", syncDisabledState, {
+                dots.forEach((dot) => {
+                    const idx = Number(dot.dataset.dotIndex ?? 0);
+                    dot.addEventListener("click", () => {
+                        const prefersReducedMotion = window.matchMedia(
+                            "(prefers-reduced-motion: reduce)",
+                        ).matches;
+                        track.scrollTo({
+                            left: idx * track.clientWidth,
+                            behavior: prefersReducedMotion ? "auto" : "smooth",
+                        });
+                    }, { signal });
+                });
+
+                track.addEventListener("scroll", updateActiveDot, {
                     passive: true,
                     signal,
                 });
-                window.addEventListener("resize", syncDisabledState, { signal });
+                window.addEventListener("resize", updateActiveDot, { signal });
 
-                syncDisabledState();
+                updateActiveDot();
             });
     }
 
