@@ -108,7 +108,24 @@ jobs:
                 "core": []
               }
             }
-          prompt: '/gemini-triage'
+          prompt: |-
+            You are an issue triage assistant. Analyze the current GitHub issue and classify it by selecting the most appropriate labels from the list of available repository labels.
+
+            Available Labels:
+            ${{ steps.get_labels.outputs.available_labels }}
+
+            Issue Title:
+            ${{ github.event.issue.title }}
+
+            Issue Description:
+            ${{ github.event.issue.body }}
+
+            Guidelines:
+            - Only select labels from the provided list of Available Labels.
+            - You can select multiple labels if applicable.
+            - Output ONLY a comma-separated list of the selected label names (e.g. "bug, enhancement").
+            - Do NOT output any markdown formatting, backticks, quotes, or conversational explanations.
+            - If no labels are appropriate, output an empty string.
 
   label:
     runs-on: 'ubuntu-latest'
