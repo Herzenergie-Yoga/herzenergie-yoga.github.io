@@ -79,7 +79,7 @@ jobs:
           gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
           gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
           gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
-          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || false) }}'
+          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || true) }}'
           gemini_model: "${{ vars.GEMINI_MODEL || 'gemini-1.5-flash' }}"
           google_api_key: '${{ secrets.GOOGLE_API_KEY }}'
           use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
@@ -154,13 +154,13 @@ jobs:
             You MUST execute the necessary tool calls. Do NOT merely describe what to do.
 
             1. If this is a new issue (Is Pull Request is false):
-               - Step 1: Call `create_branch` with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", branch="gemini/issue-${{ github.event.issue.number }}".
-               - Step 2: Read codebase files using `get_file_contents` or `search_code`.
-               - Step 3: Call `create_or_update_file` (or `push_files`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", branch="gemini/issue-${{ github.event.issue.number }}" to commit the changes.
-               - Step 4: Call `create_pull_request` with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", title="${{ github.event.issue.title }}", head="gemini/issue-${{ github.event.issue.number }}", base="master", body="Closes #${{ github.event.issue.number }}".
-               - Step 5: Call `add_issue_comment` with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", issue_number=${{ github.event.issue.number }} linking to the created PR.
+               - Step 1: Call tool `mcp_github_create_branch` (or `create_branch`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", branch="gemini/issue-${{ github.event.issue.number }}".
+               - Step 2: Read codebase files using `mcp_github_get_file_contents` (or `get_file_contents`) or `mcp_github_search_code` (or `search_code`).
+               - Step 3: Call `mcp_github_create_or_update_file` (or `create_or_update_file`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", path="<filepath>", content="<updated content>", message="feat: implement issue #${{ github.event.issue.number }}", branch="gemini/issue-${{ github.event.issue.number }}" to commit the changes.
+               - Step 4: Call `mcp_github_create_pull_request` (or `create_pull_request`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", title="${{ github.event.issue.title }}", head="gemini/issue-${{ github.event.issue.number }}", base="master", body="Closes #${{ github.event.issue.number }}".
+               - Step 5: Call `mcp_github_add_issue_comment` (or `add_issue_comment`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", issue_number=${{ github.event.issue.number }} linking to the created PR.
 
             2. If this is an existing Pull Request (Is Pull Request is true):
-               - Step 1: Inspect the PR using `pull_request_read`.
-               - Step 2: Apply the requested changes directly onto the PR branch using `create_or_update_file` or `push_files`.
-               - Step 3: Call `add_issue_comment` on the PR confirming the updates.
+               - Step 1: Inspect the PR using `mcp_github_pull_request_read` (or `pull_request_read`).
+               - Step 2: Apply the requested changes directly onto the PR branch using `mcp_github_create_or_update_file` (or `create_or_update_file`).
+               - Step 3: Call `mcp_github_add_issue_comment` (or `add_issue_comment`) on the PR confirming the updates.
