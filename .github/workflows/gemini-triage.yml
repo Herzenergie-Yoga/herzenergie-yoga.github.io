@@ -29,6 +29,11 @@ jobs:
       issues: 'read'
       pull-requests: 'read'
     steps:
+      - name: 'Checkout repository'
+        uses: 'actions/checkout@v4'
+        with:
+          persist-credentials: 'false'
+
       - name: 'Get repository labels'
         id: 'get_labels'
         uses: 'actions/github-script@v7'
