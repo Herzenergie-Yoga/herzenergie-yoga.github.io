@@ -42,7 +42,23 @@ jobs:
       - name: 'Checkout Code'
         uses: 'actions/checkout@v4'
         with:
-          persist-credentials: 'false'
+          fetch-depth: 0
+          token: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+
+      - name: 'Setup Node.js'
+        uses: 'actions/setup-node@v4'
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: 'Configure Git and GitHub CLI'
+        env:
+          GITHUB_TOKEN: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: 'Prepare prompt context'
         shell: 'bash'
@@ -72,6 +88,7 @@ jobs:
         env:
           GEMINI_CLI_TRUST_WORKSPACE: 'true'
           GITHUB_TOKEN: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+          GH_TOKEN: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
         with:
           gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
           gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
@@ -98,69 +115,39 @@ jobs:
                 "enabled": true,
                 "target": "local",
                 "outfile": ".gemini/telemetry.log"
-              },
-              "mcpServers": {
-                "github": {
-                  "command": "docker",
-                  "args": [
-                    "run",
-                    "-i",
-                    "--rm",
-                    "-e",
-                    "GITHUB_PERSONAL_ACCESS_TOKEN",
-                    "ghcr.io/github/github-mcp-server:v0.27.0"
-                  ],
-                  "includeTools": [
-                    "add_issue_comment",
-                    "issue_read",
-                    "list_issues",
-                    "search_issues",
-                    "create_pull_request",
-                    "pull_request_read",
-                    "list_pull_requests",
-                    "search_pull_requests",
-                    "create_branch",
-                    "create_or_update_file",
-                    "delete_file",
-                    "fork_repository",
-                    "get_commit",
-                    "get_file_contents",
-                    "list_commits",
-                    "push_files",
-                    "search_code"
-                  ],
-                  "env": {
-                    "GITHUB_PERSONAL_ACCESS_TOKEN": "${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}"
-                  }
-                }
-              },
-              "tools": {
-                "core": []
               }
             }
           prompt: |-
-            You are an autonomous AI software engineering agent working in a GitHub Actions workflow. Your goal is to solve the given request by reading the repository codebase, implementing the requested changes, and creating or updating a Pull Request.
+            You are an autonomous AI software engineer. You are running in a GitHub Actions runner inside the repository workspace with Git and GitHub CLI (gh) available in your environment.
 
-            Repository Owner: ${{ github.repository_owner }}
-            Repository Name: ${{ github.event.repository.name }}
-            Full Repository: ${{ github.repository }}
+            Repository: ${{ github.repository }}
             Issue / PR Number: ${{ github.event.pull_request.number || github.event.issue.number }}
             Title: ${{ github.event.pull_request.title || github.event.issue.title }}
             Is Pull Request: ${{ !!github.event.pull_request }}
-            Request Details:
+            Request:
             ${{ github.event.comment.body || github.event.review.body || github.event.issue.body || github.event.pull_request.body || inputs.additional_context }}
 
-            CRITICAL INSTRUCTIONS:
-            You MUST execute the necessary tool calls. Do NOT merely describe what to do.
+            INSTRUCTIONS:
+            Execute all shell and file editing commands directly in the workspace to solve this request:
 
             1. If this is a new issue (Is Pull Request is false):
-               - Step 1: Call tool `mcp_github_create_branch` (or `create_branch`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", branch="gemini/issue-${{ github.event.issue.number }}".
-               - Step 2: Read codebase files using `mcp_github_get_file_contents` (or `get_file_contents`) or `mcp_github_search_code` (or `search_code`).
-               - Step 3: Call `mcp_github_create_or_update_file` (or `create_or_update_file`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", path="<filepath>", content="<updated content>", message="feat: implement issue #${{ github.event.issue.number }}", branch="gemini/issue-${{ github.event.issue.number }}" to commit the changes.
-               - Step 4: Call `mcp_github_create_pull_request` (or `create_pull_request`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", title="${{ github.event.issue.title }}", head="gemini/issue-${{ github.event.issue.number }}", base="master", body="Closes #${{ github.event.issue.number }}".
-               - Step 5: Call `mcp_github_add_issue_comment` (or `add_issue_comment`) with owner="${{ github.repository_owner }}", repo="${{ github.event.repository.name }}", issue_number=${{ github.event.issue.number }} linking to the created PR.
+               - Run `git checkout -b gemini/issue-${{ github.event.issue.number }}`
+               - Read the necessary project files, modify/update them as requested (e.g. update dependencies in package.json, npm install, etc.).
+               - Verify that `npm run build` succeeds without errors.
+               - Commit the changes:
+                 `git add .`
+                 `git commit -m "feat: resolve issue #${{ github.event.issue.number }}"`
+               - Push the branch:
+                 `git push -u origin gemini/issue-${{ github.event.issue.number }}`
+               - Create the Pull Request:
+                 `gh pr create --title "${{ github.event.issue.title }}" --body "Closes #${{ github.event.issue.number }}" --head gemini/issue-${{ github.event.issue.number }} --base master`
+               - Comment on the issue:
+                 `gh issue comment ${{ github.event.issue.number }} --body "I have created the Pull Request for this issue."`
 
             2. If this is an existing Pull Request (Is Pull Request is true):
-               - Step 1: Inspect the PR using `mcp_github_pull_request_read` (or `pull_request_read`).
-               - Step 2: Apply the requested changes directly onto the PR branch using `mcp_github_create_or_update_file` (or `create_or_update_file`).
-               - Step 3: Call `mcp_github_add_issue_comment` (or `add_issue_comment`) on the PR confirming the updates.
+               - Fetch and checkout the PR branch: `gh pr checkout ${{ github.event.pull_request.number }}`
+               - Apply the requested modifications to the code.
+               - Verify `npm run build`.
+               - Commit and push the updates:
+                 `git add . && git commit -m "fix: apply review feedback" && git push`
+               - Comment on the PR confirming the updates.
