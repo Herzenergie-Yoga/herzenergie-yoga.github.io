@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 # GitHub App credentials
 gha-creds-*.json
+
+# Gemini CLI temporary state
+.gemini/
+.gemini-summary.md
+.gemini-request.md
+.pr-comment.md
