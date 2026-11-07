@@ -1,17 +1,23 @@
 name: "🤖 Gemini AI Assistant"
 
 on:
+  issues:
+    types: [opened, reopened]
   issue_comment:
     types: [created]
   pull_request_review_comment:
     types: [created]
   pull_request_review:
     types: [submitted]
-  issues:
-    types: [opened, labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue or PR number to process"
+        required: true
+        type: number
 
 concurrency:
-  group: gemini-${{ github.event.pull_request.number || github.event.issue.number || github.run_id }}
+  group: gemini-${{ inputs.issue_number || github.event.pull_request.number || github.event.issue.number || github.run_id }}
   cancel-in-progress: false
 
 defaults:
@@ -26,66 +32,32 @@ permissions:
 
 jobs:
   gemini-agent:
-    # Only run for repository Owner, Member, or Collaborator when triggered via @ai, @gemini, @gemini-cli, or 'ai-task' label
-    # Note: GitHub Actions `contains()` is case-insensitive by default.
-    if: >-
-      github.event.sender.type == 'User' &&
-      (
-        (
-          github.event_name == 'issue_comment' &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association) &&
-          (
-            contains(github.event.comment.body, '@ai') ||
-            contains(github.event.comment.body, '@gemini')
-          )
-        ) ||
-        (
-          github.event_name == 'pull_request_review_comment' &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association) &&
-          (
-            contains(github.event.comment.body, '@ai') ||
-            contains(github.event.comment.body, '@gemini')
-          )
-        ) ||
-        (
-          github.event_name == 'pull_request_review' &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.review.author_association) &&
-          (
-            contains(github.event.review.body, '@ai') ||
-            contains(github.event.review.body, '@gemini')
-          )
-        ) ||
-        (
-          github.event_name == 'issues' &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association) &&
-          (
-            (github.event.action == 'labeled' && github.event.label.name == 'ai-task') ||
-            (
-              github.event.action == 'opened' &&
-              (
-                contains(github.event.issue.body, '@ai') ||
-                contains(github.event.issue.body, '@gemini') ||
-                contains(github.event.issue.title, '@ai') ||
-                contains(github.event.issue.title, '@gemini')
-              )
-            )
-          )
-        )
-      )
-
+    # Run for any human user action (not bots). Collaborator write/admin access is verified in the first step
+    # because GitHub Organization webhooks report author_association as NONE for private org members.
+    if: github.event.sender.type == 'User'
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
-      - name: Acknowledge request on GitHub
+      - name: Verify collaborator permission & acknowledge request
+        id: init
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+          ACTOR: ${{ github.actor }}
           REPO: ${{ github.repository }}
+          NUMBER: ${{ inputs.issue_number || github.event.pull_request.number || github.event.issue.number }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          PERM=$(gh api "repos/${REPO}/collaborators/${ACTOR}/permission" --jq '.permission' 2>/dev/null || echo "none")
+          echo "Actor $ACTOR has permission: $PERM"
+          if [[ "$PERM" != "admin" && "$PERM" != "maintain" && "$PERM" != "write" ]]; then
+            echo "User $ACTOR does not have write access to $REPO. Skipping."
+            exit 1
+          fi
+
+          echo "number=$NUMBER" >> "$GITHUB_OUTPUT"
           gh issue comment "$NUMBER" --repo "$REPO" \
-            --body "🤖 Hallo @${{ github.actor }}, ich bearbeite deine Anfrage gerade! ([Fortschritt im Log ansehen](${RUN_URL}))"
+            --body "🤖 Hallo @${ACTOR}, ich bearbeite deine Anfrage gerade! ([Fortschritt im Log ansehen](${RUN_URL}))"
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -102,15 +74,40 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Configure Git and checkout target branch
+      - name: Configure Git, checkout branch, and prepare context
         id: branch_setup
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IS_PR: ${{ !!(github.event.pull_request || github.event.issue.pull_request) }}
-          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ steps.init.outputs.number }}
+          COMMENT_BODY: ${{ github.event.comment.body || github.event.review.body || '' }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          ISSUE_JSON=$(gh api "repos/${REPO}/issues/${NUMBER}")
+          TITLE=$(echo "$ISSUE_JSON" | jq -r '.title // ""')
+          BODY=$(echo "$ISSUE_JSON" | jq -r '.body // ""')
+          IS_PR=$(echo "$ISSUE_JSON" | jq -r '.pull_request != null')
+
+          {
+            echo "title<<EOF"
+            echo "$TITLE"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "# Issue / PR Title"
+            echo "$TITLE"
+            echo ""
+            echo "# Issue / PR Description"
+            echo "$BODY"
+            if [ -n "$COMMENT_BODY" ]; then
+              echo ""
+              echo "# Latest User Instruction / Comment"
+              echo "$COMMENT_BODY"
+            fi
+          } > .gemini-request.md
 
           if [ "$IS_PR" = "true" ]; then
             echo "Checking out existing Pull Request #$NUMBER..."
@@ -129,23 +126,6 @@ jobs:
             echo "branch=$BRANCH_NAME" >> "$GITHUB_OUTPUT"
             echo "is_pr=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Prepare request context
-        env:
-          TITLE: ${{ github.event.pull_request.title || github.event.issue.title }}
-          BODY: ${{ github.event.pull_request.body || github.event.issue.body }}
-          COMMENT: ${{ github.event.comment.body || github.event.review.body || github.event.issue.body }}
-        run: |
-          {
-            echo "# Issue / PR Title"
-            echo "$TITLE"
-            echo ""
-            echo "# Issue / PR Description"
-            echo "$BODY"
-            echo ""
-            echo "# Latest User Instruction / Comment"
-            echo "$COMMENT"
-          } > .gemini-request.md
 
       - name: Run Gemini CLI to edit files
         uses: google-github-actions/run-gemini-cli@v0
@@ -168,7 +148,7 @@ jobs:
             TASK:
             1. Read `GEMINI.md` to understand the project structure and conventions.
             2. Read `.gemini-request.md` to see the user's request and context.
-            3. Inspect the relevant files in `src/` (and `public/` if needed) and directly edit or create the files in the workspace to fulfill the user's request accurately.
+            3. Inspect the relevant files in the workspace and directly edit or update them (or run `npm update` / `npm install` if requested) to fulfill the user's request accurately.
             4. Run `npm run build` using your shell tool to verify the Astro build succeeds without errors. If there are any build errors, fix them.
             5. Write a concise German summary of the changes you made to `.gemini-summary.md` (do not commit `.gemini-summary.md` or `.gemini-request.md`).
             6. Do NOT run `git push` or `gh pr create` yourself; the next GitHub Actions step will automatically commit, push, create/update the Pull Request, and deploy the preview.
@@ -179,8 +159,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_NAME: ${{ steps.branch_setup.outputs.branch }}
           IS_PR: ${{ steps.branch_setup.outputs.is_pr }}
-          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
-          ISSUE_TITLE: ${{ github.event.pull_request.title || github.event.issue.title }}
+          NUMBER: ${{ steps.init.outputs.number }}
+          ISSUE_TITLE: ${{ steps.branch_setup.outputs.title }}
         run: |
           SUMMARY=""
           if [ -f .gemini-summary.md ]; then
@@ -250,7 +230,7 @@ jobs:
         if: steps.publish_pr.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+          NUMBER: ${{ steps.init.outputs.number }}
           PR_NUMBER: ${{ steps.publish_pr.outputs.pr_number }}
           SUMMARY: ${{ steps.publish_pr.outputs.summary }}
           REPO: ${{ github.repository }}
@@ -268,7 +248,7 @@ jobs:
 
           ![QR Code zur Vorschau](${QR_URL})
 
-          *(Wenn alles passt, kannst du im Pull Request #${PR_NUMBER} auf **Merge pull request** klicken, um die Änderungen live zu schalten, oder dort mit \`@ai ...\` weitere Anpassungen wünschen.)*
+          *(Wenn alles passt, kannst du im Pull Request #${PR_NUMBER} auf **Merge pull request** klicken, um die Änderungen live zu schalten, oder dort einen Kommentar für weitere Anpassungen hinterlassen.)*
           EOF
           sed -i 's/^          //' .pr-comment.md
 
@@ -282,7 +262,7 @@ jobs:
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+          NUMBER: ${{ steps.init.outputs.number || inputs.issue_number || github.event.pull_request.number || github.event.issue.number }}
           REPO: ${{ github.repository }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
