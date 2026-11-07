@@ -12,10 +12,7 @@ const { title } = Astro.props;
 
 const angebote = [
     { href: "/kurse", title: "Yoga" },
-    { href: "/yoga-special-event", title: "Yoga als Special Event" },
-    { href: "/eft", title: "EFT" },
     { href: "/aetherische-oele", title: "Ätherische Öle" },
-    { href: "/cacao-ritual", title: "Cacao Ritual" },
     { href: "/specials", title: "Specials" },
 ];
 
@@ -36,33 +33,20 @@ const headerImgSrc = isLandingPage
 
 const pageHeaderImages: Record<string, string[]> = {
     "/kurse": ["/img/yoga-1.webp", "/img/yoga-2.webp", "/img/yoga-3.webp"].map(toHref),
-    "/eft": ["/img/eft-1.webp", "/img/eft-2.webp"].map(toHref),
     "/aetherische-oele": ["/img/aeth-oel.webp"].map(toHref),
-    "/cacao-ritual": ["/img/kakao-ritual.webp"].map(toHref),
     "/specials": ["/img/specials.webp"].map(toHref),
-    "/yoga-special-event": [
-        "/img/special-event-1.webp",
-        "/img/special-event-2.webp",
-        "/img/special-event-3.webp",
-        "/img/special-event-4.webp",
-    ].map(toHref),
 };
 
 const pageHeaderPositions: Record<string, string> = {
     "/": "object-[50%_25%] sm:object-[50%_28%] md:object-[50%_32%]",
     "/aetherische-oele": "object-[50%_20%] sm:object-[50%_24%] md:object-[50%_28%]",
-    "/cacao-ritual": "object-[50%_30%] sm:object-[50%_34%] md:object-[50%_36%]",
-    "/eft": "object-[50%_24%] sm:object-[50%_28%] md:object-[50%_30%]",
     "/about": "object-[50%_35%]",
 };
 
 const pageHeaderHeights: Record<string, string> = {
     "/": "h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[85vh] min-h-[460px] md:min-h-[600px] lg:min-h-[700px] max-h-[900px]",
     "/aetherische-oele": "h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] min-h-[440px] md:min-h-[580px] lg:min-h-[680px] max-h-[850px]",
-    "/cacao-ritual": "h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] min-h-[440px] md:min-h-[580px] lg:min-h-[680px] max-h-[850px]",
-    "/eft": "h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] min-h-[420px] md:min-h-[550px] lg:min-h-[650px] max-h-[800px]",
     "/kurse": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
-    "/yoga-special-event": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
     "/specials": "h-[40vh] sm:h-[50vh] md:h-[60vh] min-h-[360px] md:min-h-[480px]",
 };
 

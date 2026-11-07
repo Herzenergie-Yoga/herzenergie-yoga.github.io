@@ -1,34 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
 import { toHref } from '../../utils/paths';
-
-const kurse = await getCollection('kurse');
-
-const tageFor = (kursart: string) =>
-  kurse
-    .filter((k) => k.data.kursart === kursart)
-    .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
-    .map((k) => ({ wochentag: k.data.wochentag, hinweis: k.data.hinweis }));
 
 const yogastile = [
   {
     href: '/kurse/hatha-yoga',
     name: 'Hatha Yoga',
     tagline: 'Kraftvoll & sanft im Gleichgewicht',
-    info: 'Freitag · Sonntag',
+    info: ['Neue Kurse wieder im Frühjahr 2027'],
   },
   {
     href: '/kurse/yin-yoga',
-    name: 'Yin Yoga',
+    name: 'Yin Yoga & ätherische Öle',
     tagline: 'Still werden, tief loslassen',
-    info: 'Samstag',
+    info: ['Monatliche einzelne Termine', '14.11. · Kloster Oesede', '18.11. · Sutthausen'],
   },
   {
     href: '/kurse/kinder-yoga',
     name: 'Kinder-Yoga',
     tagline: 'Spielen, atmen, wachsen – Yoga für kleine Menschen.',
-    info: 'Neue Kurse in Planung',
+    info: ['Neue Kurse in Planung'],
   },
 ];
 ---
@@ -50,18 +41,11 @@ const yogastile = [
       >
         <h3 class="text-5xl font-alex-brush text-brand-primary font-normal min-h-24 flex items-center justify-center">{stil.name}</h3>
         <p class="text-brand-text font-light tracking-wide text-sm leading-relaxed italic min-h-12 flex items-center justify-center">{stil.tagline}</p>
-        {tageFor(stil.name).length > 0 ? (
-          <div class="space-y-2">
-            {tageFor(stil.name).map(({ wochentag, hinweis }) => (
-              <div>
-                <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{wochentag}</p>
-                {hinweis && <p class="text-xs italic text-brand-secondary mt-0.5">{hinweis}</p>}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p class="text-xs tracking-[0.2em] uppercase text-brand-text/60 font-light">{stil.info}</p>
-        )}
+        <div class="space-y-2">
+          {stil.info.map((info) => (
+            <p class="text-sm tracking-wide text-brand-text/80 font-light">{info}</p>
+          ))}
+        </div>
         <div class="mt-auto pt-5 border-t border-brand-secondary/20">
           <span class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase group-hover:underline underline-offset-4">Mehr erfahren</span>
         </div>

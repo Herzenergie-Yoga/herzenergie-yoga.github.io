@@ -10,7 +10,6 @@ Deployed auf GitHub Pages: [ninjaseidel.de](https://ninjaseidel.de) / [herzenerg
 - [Tailwind CSS v4](https://tailwindcss.com) – Utility-first CSS framework
 - [GitHub Pages](https://pages.github.com) – Hosting via `gh-pages` Branch
 - [Deploy PR Preview](https://github.com/rossjrw/pr-preview-action) – Automatische Live-Vorschau für jeden Pull Request
-- [Gemini CLI GitHub Action](https://github.com/google-github-actions/run-gemini-cli) – KI-gestützte Code-Reviews, Issue-Triage und Assistenz
 
 ## 💻 Entwicklung
 
@@ -33,29 +32,3 @@ npm run preview   # Produktions-Build lokal vorschauen
   `https://ninjaseidel.de/pr-preview/pr-<Nummer>/`
 - Ein Sticky-Kommentar mit direktem Link und QR-Code wird automatisch im Pull Request gepostet.
 - Beim Schließen oder Mergen des PRs wird die Vorschau automatisch wieder entfernt.
-
-## 🤖 Gemini CLI GitHub Action
-
-Dieses Repository ist mit der offiziellen [`google-github-actions/run-gemini-cli`](https://github.com/google-github-actions/run-gemini-cli) GitHub Action ausgestattet.
-
-### 🔑 Einmalige Einrichtung
-
-1. Erstelle einen API-Schlüssel in [Google AI Studio](https://aistudio.google.com/).
-2. Gehe in GitHub zu deinem Repository: **Settings > Secrets and variables > Actions**.
-3. Klicke auf **New repository secret**:
-   - **Name**: `GEMINI_API_KEY`
-   - **Secret**: Dein erstellter Google Gemini API-Schlüssel
-
-### ⚡ Verfügbare Funktionen & Befehle
-
-| Auslöser / Befehl | Beschreibung |
-|---|---|
-| **Neuer Pull Request** | Automatisches Code-Review für neu geöffnete PRs |
-| `@gemini-cli /review` | Manuelles Code-Review anfordern (in PR-Kommentaren) |
-| `@gemini-cli /review <fokus>` | Review mit spezifischem Fokus (z.B. `@gemini-cli /review focus on performance`) |
-| **Neues Issue** | Automatische Analyse und Label-Zuweisung |
-| `@gemini-cli /triage` | Manuelle Triage eines Issues auslösen |
-| `@gemini-cli <frage>` | Interaktiver KI-Assistent für Fragen, Code-Vorschläge oder Refactorings |
-| `@gemini-cli /approve` | Plan-Ausführung und automatische PR-Erstellung |
-
-Projektrichtlinien und Architektur-Kontext für Gemini befinden sich in [`GEMINI.md`](./GEMINI.md).

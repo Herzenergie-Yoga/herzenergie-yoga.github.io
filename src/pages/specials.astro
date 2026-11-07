@@ -1,83 +1,51 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const termine = [
-    { wochentag: "Sonntag", datum: "23. August 2026" },
-    { wochentag: "Sonntag", datum: "06. September 2026" },
-];
+import { toHref } from "../utils/paths";
 ---
 
-<Layout title="Specials">
-    <h1>Yin Yoga meets ätherische Öle</h1>
+<Layout title="Specials – Rauhnächte">
+    <h1>Rauhnächte</h1>
 
-    <p
-        class="not-prose text-center text-brand-primary font-antic-didone tracking-[0.2em] uppercase text-sm mb-10"
-    >
-        Finde Ruhe in dir selbst · Beruhige dein Nervensystem
-    </p>
-
-    <p>
-        Tauche ein in eine wohltuende Auszeit für Körper, Geist und Seele.
-    </p>
-
-    <p>
-        Mit sanften Yin-Yoga-Positionen und der unterstützenden Kraft
-        ätherischer Öle schenkst du dir Zeit zum Loslassen, Entspannen und
-        Auftanken.
-    </p>
-
-    <p>
-        <strong>Inklusive:</strong> ätherischer Öl-Roll-on für alle
-        Teilnehmenden!
+    <p class="not-prose text-center text-brand-primary font-antic-didone tracking-[0.15em] uppercase text-sm mb-10">
+        13 Wünsche · Kakao-Ritual · Yin Yoga
     </p>
 
     <h2>Termine</h2>
 
-    <div
-        class="not-prose my-10 bg-brand-bg border border-brand-secondary/20 px-6 py-8 sm:px-10 sm:py-10 space-y-6 text-center"
-    >
-        <p class="text-brand-text font-light tracking-widest text-sm">
-            16:30 – 18:30 Uhr
-        </p>
-        <ul
-            class="flex flex-col items-center gap-2 text-sm text-brand-text/80 tracking-wider list-none p-0"
-        >
-            {
-                termine.map((termin) => (
-                    <li>
-                        {termin.wochentag} · {termin.datum}
-                    </li>
-                ))
-            }
-        </ul>
-        <div class="pt-6 mt-6 border-t border-brand-secondary/20 space-y-2">
-            <p
-                class="text-brand-primary font-antic-didone tracking-[0.15em] text-sm uppercase"
-            >
-                Energieausgleich
-            </p>
-            <p class="text-brand-text font-light text-sm">25 € pro Termin</p>
-            <p class="text-brand-text font-light text-sm">
-                Begrenzte Teilnehmerzahl
-            </p>
+    <div class="not-prose my-10 border border-brand-secondary/20 px-6 py-8 sm:px-10 sm:py-10 space-y-8 text-center">
+        <div class="space-y-3">
+            <p class="text-brand-primary font-antic-didone text-xl">Sonntag, 20. Dezember 2026</p>
+            <p class="text-brand-text font-light tracking-wide">16–18 Uhr</p>
+            <p class="inline-block border border-brand-secondary/40 px-4 py-2 text-brand-primary font-semibold">Bereits ausgebucht</p>
+        </div>
+
+        <div class="border-t border-brand-secondary/20 pt-8 space-y-3">
+            <p class="text-brand-primary font-antic-didone text-xl">Samstag, 19. Dezember 2026</p>
+            <p class="text-brand-primary font-semibold">Zusätzlicher Termin in Planung</p>
+            <p class="text-brand-text font-light text-sm">Weitere Informationen folgen.</p>
         </div>
     </div>
 
     <h2>Ort</h2>
 
-    <p class="not-prose text-brand-primary font-bold text-lg">
-        Beauty Lounge Sutthausen
-    </p>
+    <p class="text-center">Physiopraxis Lina Eichler · Kloster Oesede</p>
 
-    <h2>Anmeldung</h2>
+    <h2>Energieausgleich</h2>
+
+    <p class="text-center">35 € inklusive Kakao und Schreibmaterial</p>
+
+    <h2>Interesse am zusätzlichen Termin?</h2>
 
     <p>
-        Melde dich gerne telefonisch oder per WhatsApp bei mir an:<br />
-        <strong><a href="tel:+491632876265">0163 2876265</a></strong>
+        Bei Interesse am geplanten Termin am 19. Dezember melde dich gerne bei Ninja Seidel:
+        <strong><a href="tel:+491632876265">0163 2876265</a></strong>.
     </p>
 
-    <blockquote>
-        Gönn dir eine Pause vom Alltag und finde zurück zu innerer Ruhe,
-        Gelassenheit und Balance.
-    </blockquote>
+    <img
+        src={toHref("/img/rauhnaechte-2026.jpeg")}
+        alt="Rauhnächte: 13 Wünsche, Kakao-Ritual und Yin Yoga am Sonntag, 20. Dezember, 16–18 Uhr, in der Physiopraxis Lina Eichler in Kloster Oesede. 35 € inklusive Kakao und Schreibmaterial. Dieser Termin ist bereits ausgebucht."
+        width="900"
+        height="1600"
+        loading="lazy"
+    />
 </Layout>

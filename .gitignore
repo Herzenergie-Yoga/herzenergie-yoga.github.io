@@ -23,9 +23,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# gemini-cli settings
-.gemini/*
-!.gemini/commands/
-
 # GitHub App credentials
 gha-creds-*.json
