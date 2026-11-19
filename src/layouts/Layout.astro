@@ -2,6 +2,10 @@
 import { ClientRouter } from "astro:transitions";
 import HeaderCarousel from "../components/header/HeaderCarousel.astro";
 import { toHref } from "../utils/paths";
+import "@fontsource-variable/nunito/wght.css";
+import "@fontsource-variable/nunito/wght-italic.css";
+import "@fontsource/alex-brush/400.css";
+import "@fontsource/antic-didone/400.css";
 import "../styles/global.css";
 
 interface Props {
@@ -20,6 +24,8 @@ const footerLinks = [
     { href: "/about", title: "Über mich" },
     { href: "/agb", title: "AGB & Dein Yoga" },
     { href: "/kontakt", title: "Kontakt" },
+    { href: "/impressum", title: "Impressum" },
+    { href: "/datenschutz", title: "Datenschutz" },
 ];
 
 const rawPath = new URL(Astro.request.url).pathname;
@@ -68,13 +74,6 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href={toHref("/favicon.ico")} />
         <meta name="generator" content={Astro.generator} />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Antic+Didone&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-            rel="stylesheet"
-        />
 
         <title>{title} | Herzenergie Yoga</title>
         <ClientRouter />
@@ -373,6 +372,9 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
             let navScrollAbort: AbortController | null = null;
             let navReadyTimeout: ReturnType<typeof setTimeout> | null = null;
             let isNavigating = false;
+            // In-memory UI state (survives ClientRouter navigations, no browser storage)
+            let heroAnimated = false;
+            let navScrolled = false;
 
             document.addEventListener("astro:before-preparation", () => {
                 isNavigating = true;
@@ -393,11 +395,11 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                 }
 
                 // Header image zoom animation only on initial page load
-                const isFirstLoad = !sessionStorage.getItem("hero-animated");
+                const isFirstLoad = !heroAnimated;
                 document.querySelectorAll(".header-img").forEach((img) => {
                     img.classList.toggle("animate-slow-zoom-out", isFirstLoad);
                 });
-                if (isFirstLoad) sessionStorage.setItem("hero-animated", "1");
+                heroAnimated = true;
 
                 // Mobile menu toggle
                 const btn = document.getElementById("mobile-menu-btn");
@@ -436,7 +438,7 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                 if (header) {
                     // Initialzustand sofort setzen (ohne Animation)
                     header.classList.remove("nav-ready");
-                    const wasScrolled = sessionStorage.getItem("nav-scrolled") === "1";
+                    const wasScrolled = navScrolled;
                     if (wasScrolled) {
                         header.classList.add("scrolled");
                     } else {
@@ -447,10 +449,10 @@ const headerHeight = pageHeaderHeights[normalizedPath] ?? DEFAULT_HEADER_HEIGHT;
                         const isScrolled = header.classList.contains("scrolled");
                         if (!isScrolled && window.scrollY > 80) {
                             header.classList.add("scrolled");
-                            sessionStorage.setItem("nav-scrolled", "1");
+                            navScrolled = true;
                         } else if (isScrolled && window.scrollY < 25) {
                             header.classList.remove("scrolled");
-                            sessionStorage.setItem("nav-scrolled", "0");
+                            navScrolled = false;
                         }
                     };
 

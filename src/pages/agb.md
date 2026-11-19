@@ -1,23 +1,23 @@
 ---
 layout: ../layouts/Layout.astro
-title: AGB's & deine Yogapraxis
+title: AGB & deine Yogapraxis
 ---
 
-# AGB's & deine Yogapraxis
+# AGB & deine Yogapraxis
 
-Die AGB's werden mit Deiner Anmeldung und automatisch mit jeder Teilnahme am Unterricht akzeptiert.
+Diese AGB gelten für alle Kurse und Veranstaltungen von Herzenergie Yoga. Bei Deiner Anmeldung weise ich Dich auf sie hin; sie sind jederzeit unter [ninjaseidel.de/agb](/agb) abrufbar.
 
 ### Haftung
 
-Die Teilnahme sämtlicher Kurse und Veranstaltungen von Herzenergie-Yoga erfolgt eigenverantwortlich und auf eigene Gefahr. Es wird keine Haftung für Verletzungen und Schädigungen jeglicher Art übernommen. Dies gilt auch für beschädigte oder abhanden gekommene Wertgegenstände.
+Die Teilnahme sämtlicher Kurse und Veranstaltungen von Herzenergie-Yoga erfolgt eigenverantwortlich. Ich hafte unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit. Bei leichter Fahrlässigkeit hafte ich nur für die Verletzung wesentlicher Vertragspflichten, also solcher Pflichten, deren Erfüllung die ordnungsgemäße Durchführung des Kurses erst ermöglicht und auf deren Einhaltung Du regelmäßig vertrauen darfst, und zwar begrenzt auf den vorhersehbaren, vertragstypischen Schaden. Für mitgebrachte Wertgegenstände, die beschädigt werden oder abhanden kommen, übernehme ich keine Haftung, soweit mich kein Verschulden trifft.
 
 Der Yogaunterricht wird nach bestem Wissen und Gewissen durchgeführt.
 
 Ob die Teilnahme mit Deiner körperlichen und psychischen Verfassung vereinbar ist, entscheidest Du eigenverantwortlich.
 
-Besprich Dich mit Deinem Arzt, wenn Du Dir unsicher bist. Das gilt auch, wenn Du ein chronisches Leiden hast oder psychosomatisch erkrankt bist. Der Yogaunterricht ersetzen keine Therapie oder einen Arztbesuch.
+Besprich Dich mit Deinem Arzt, wenn Du Dir unsicher bist. Das gilt auch, wenn Du ein chronisches Leiden hast oder psychosomatisch erkrankt bist. Der Yogaunterricht ersetzt keine Therapie oder einen Arztbesuch.
 
-Bitte setze mich in Deinem eigenen Interesse über körperliche Besonderheiten, bestehende Krankheiten, aktuelle Beschwerden oder eine Schwangerschaft in Kenntnis.
+Bitte setze mich in Deinem eigenen Interesse über körperliche Besonderheiten, bestehende Krankheiten, aktuelle Beschwerden oder eine Schwangerschaft in Kenntnis. Diese Angaben sind freiwillig. Bitte teile sie mir persönlich oder telefonisch mit, nicht per Messenger. Wie ich damit umgehe, erfährst Du in der [Datenschutzerklärung](/datenschutz).
 
 Solltest Du an einem Kursabend nicht teilnehmen können, sage mir bitte frühstmöglich Bescheid, spätestens jedoch 24h vor Beginn.
 
@@ -26,6 +26,8 @@ Wenn Du an einem Kursabend nicht teilnehmen kannst (z.B. aus krankheitsbedingten
 Selbstverständlich kann ein Freund/ eine Freundin diesen Termin anstatt Deiner wahrnehmen. Bitte setze mich darüber rechtzeitig in Kenntnis.
 
 Bei einer längeren Krankheit / Zwangspause finden wir gemeinsam eine Lösung.
+
+Fällt ein Termin aus Gründen aus, die ich zu vertreten habe, wird er nachgeholt oder anteilig erstattet.
 
 Sprich mich bitte an, wenn Du kurs- oder zahlungsmäßig etwas auf dem Herzen hast.
 

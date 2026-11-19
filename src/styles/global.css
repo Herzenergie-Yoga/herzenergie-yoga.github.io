@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-nunito: 'Nunito', sans-serif;
+  --font-nunito: 'Nunito Variable', sans-serif;
   --font-alex-brush: 'Alex Brush', cursive;
   --font-antic-didone: 'Antic Didone', serif;
   --color-brand-bg: #f5f2ef;

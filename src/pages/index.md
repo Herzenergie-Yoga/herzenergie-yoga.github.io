@@ -11,7 +11,7 @@ In meiner Arbeit begleiten dich Yoga und ätherische Öle auf deinem Weg zu mehr
 
 **Yoga** hilft dir, deinen Körper bewusst zu spüren, Spannungen loszulassen und neue Energie aufzubauen. Durch achtsame Bewegungen und bewusste Atmung findest du zurück in deine Mitte.
 
-**Ätherische Öle** begleiten dich auf dieser Reise auf einer ganz besonderen Ebene. Ihre natürlichen Düfte wirken direkt auf dein Nervensystem und können dich beruhigen, stärken oder beleben – genau das, was du gerade brauchst.
+**Ätherische Öle** begleiten dich auf dieser Reise auf einer ganz besonderen Ebene. Ihre natürlichen Düfte können zu deinem Wohlbefinden beitragen und dir helfen, zur Ruhe zu kommen oder neue Energie zu spüren.
 
 Hier findest du einen geschützten Raum, in dem du einfach du selbst sein darfst. Ohne Druck, ohne Erwartungen. Dafür mit viel Achtsamkeit, Wärme und Tiefe.
 
